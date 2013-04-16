@@ -85,7 +85,7 @@ public class WeiboDialog extends Dialog {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFeatureDrawableAlpha(Window.FEATURE_OPTIONS_PANEL, 0);  
 		mContent = new RelativeLayout(getContext());
-		setUpWebView();
+		setUpWebView( );
 
 		addContentView(mContent, new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.FILL_PARENT));

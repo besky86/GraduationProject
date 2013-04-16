@@ -21,6 +21,7 @@ import com.weibo.sdk.android.WeiboException;
 import com.weibo.sdk.android.keep.AccessTokenKeeper;
 import com.weibo.sdk.android.sso.SsoHandler;
 import com.weibo.sdk.android.util.Utility;
+
 /**
  * 
  * @author liyan (liyan9@staff.sina.com.cn)
@@ -28,8 +29,9 @@ import com.weibo.sdk.android.util.Utility;
 public class MainActivity extends Activity {
 
     private Weibo mWeibo;
-    private static final String CONSUMER_KEY = "966056985";// 替换为开发者的appkey，例如"1646212860";
-    private static final String REDIRECT_URL = "http://www.sina.com";
+    private static final String CONSUMER_KEY = "1325775247";// "966056985";//
+                                                            // 替换为开发者的appkey，例如"1646212860";
+    private static final String REDIRECT_URL = "http://open.weibo.com/apps/1325775247/privilege/oauth";// "http://www.sina.com";
     private Button authBtn, ssoBtn, cancelBtn;
     private TextView mText;
     public static Oauth2AccessToken accessToken;
@@ -51,6 +53,12 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 mWeibo.authorize(MainActivity.this, new AuthDialogListener());
+                //added   by Lei@2013/04/13 UPD START
+                //Intent intent = new Intent(MainActivity.this, TestActivity.class);
+                //startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, TestActivity.class);
+                startActivity(intent);
+                //added   by Lei@2013/04/13 UPD END
             }
         });
         ssoBtn = (Button) findViewById(R.id.sso);// 触发sso的按钮
@@ -85,6 +93,10 @@ public class MainActivity extends Activity {
         });
 
         mText = (TextView) findViewById(R.id.show);
+        // added by Lei@2013/04/13 UPD START
+        // //读取上次登录的用户访问信令信息
+        // 读取上次登录的用户访问信令信息
+        // added by Lei@2013/04/13 UPD END
         MainActivity.accessToken = AccessTokenKeeper.readAccessToken(this);
         if (MainActivity.accessToken.isSessionValid()) {
             Weibo.isWifi = Utility.isWifi(this);
@@ -102,7 +114,11 @@ public class MainActivity extends Activity {
                     .format(new java.util.Date(MainActivity.accessToken
                             .getExpiresTime()));
             mText.setText("access_token 仍在有效期内,无需再次登录: \naccess_token:"
-                    + MainActivity.accessToken.getToken() + "\n有效期：" + date);
+                    + MainActivity.accessToken.getToken() + "\n有效期：" + date
+                    // added by Lei@2013/04/12 UPD START
+                    // + MainActivity.accessToken.getUid());
+                    + "\nUID : " + MainActivity.accessToken.getUid());
+            // added by Lei@2013/04/12 UPD END
         } else {
             mText.setText("使用SSO登录前，请检查手机上是否已经安装新浪微博客户端，目前仅3.0.0及以上微博客户端版本支持SSO；如果未安装，将自动转为Oauth2.0进行认证");
         }
@@ -121,13 +137,25 @@ public class MainActivity extends Activity {
         public void onComplete(Bundle values) {
             String token = values.getString("access_token");
             String expires_in = values.getString("expires_in");
-            MainActivity.accessToken = new Oauth2AccessToken(token, expires_in);
+            String uid = values.getString("uid");
+            // added by Lei@2013/04/12 UPD START
+            // MainActivity.accessToken = new Oauth2AccessToken(token,
+            // expires_in,uid);
+            MainActivity.accessToken = new Oauth2AccessToken(token, expires_in,
+                    uid);
+            // added by Lei@2013/04/12 UPD END
+
+            // delete by Lei@2013/04/12 DEL START
+            // MainActivity.accessToken = new Oauth2AccessToken(token,
+            // expires_in);
+            // delete by Lei@2013/04/12 DEL END
             if (MainActivity.accessToken.isSessionValid()) {
                 String date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
                         .format(new java.util.Date(MainActivity.accessToken
                                 .getExpiresTime()));
                 mText.setText("认证成功: \r\n access_token: " + token + "\r\n"
-                        + "expires_in: " + expires_in + "\r\n有效期：" + date);
+                        + "expires_in: " + expires_in + "\r\n有效期：" + date
+                        + "\r\n" + "UID :" + uid);
                 try {
                     Class sso = Class
                             .forName("com.weibo.sdk.android.api.WeiboAPI");// 如果支持weiboapi的话，显示api功能演示入口按钮

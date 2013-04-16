@@ -41,7 +41,7 @@ public class NetStateManager {
 
 	}
 	/**
-	 * 获取 当前apn并返回httphost对象
+	 * 鑾峰彇 褰撳墠apn骞惰繑鍥瀐ttphost瀵硅薄
 	 * @return 
 	 */
 	public static HttpHost getAPN() {
@@ -52,7 +52,7 @@ public class NetStateManager {
 			mCursor = mContext.getContentResolver().query(uri, null, null, null, null);
 		}
 		if (mCursor != null && mCursor.moveToFirst()) {
-			// 游标移至第一条记录，当然也只有一条
+			// 娓告爣绉昏嚦绗竴鏉¤褰曪紝褰撶劧涔熷彧鏈変竴鏉�			
 			String proxyStr = mCursor.getString(mCursor.getColumnIndex("proxy"));
 			if (proxyStr != null && proxyStr.trim().length() > 0) {
 				proxy = new HttpHost(proxyStr, 80);
