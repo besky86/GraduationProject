@@ -80,20 +80,21 @@ public final class R {
         public static final int weibosdk_title_logo=0x7f02002a;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a000d;
+        public static final int action_settings=0x7f0a000e;
         public static final int add_user_button=0x7f0a0000;
-        public static final int apiCancel=0x7f0a0007;
-        public static final int auth=0x7f0a0004;
-        public static final int img_logo=0x7f0a0009;
-        public static final int login_button=0x7f0a0003;
-        public static final int menu_settings=0x7f0a000c;
-        public static final int oauth_start=0x7f0a000a;
-        public static final int show=0x7f0a0006;
-        public static final int sso=0x7f0a0005;
-        public static final int test=0x7f0a0008;
-        public static final int txt_login_show_name=0x7f0a0001;
-        public static final int user_list=0x7f0a000b;
-        public static final int user_select_btn=0x7f0a0002;
+        public static final int apiCancel=0x7f0a0008;
+        public static final int auth=0x7f0a0005;
+        public static final int head_icon=0x7f0a0001;
+        public static final int img_logo=0x7f0a000a;
+        public static final int login_button=0x7f0a0004;
+        public static final int menu_settings=0x7f0a000d;
+        public static final int oauth_start=0x7f0a000b;
+        public static final int show=0x7f0a0007;
+        public static final int sso=0x7f0a0006;
+        public static final int test=0x7f0a0009;
+        public static final int txt_login_show_name=0x7f0a0002;
+        public static final int user_list=0x7f0a000c;
+        public static final int user_select_btn=0x7f0a0003;
     }
     public static final class layout {
         public static final int activity_login=0x7f030000;

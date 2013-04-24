@@ -4,15 +4,17 @@ import com.weibo.sdk.android.Oauth2AccessToken;
 import com.weibo.sdk.android.WeiboParameters;
 import com.weibo.sdk.android.net.AsyncWeiboRunner;
 import com.weibo.sdk.android.net.RequestListener;
+
 /**
  * 微博 API的基类，每个接口类都继承了此抽象类
+ * 
  * @author xiaowei6@staff.sina.com.cn
- *
+ * 
  */
 public abstract class WeiboAPI {
-    /**
-     * 访问微博服务接口的地址
-     */
+	/**
+	 * 访问微博服务接口的地址
+	 */
 	public static final String API_SERVER = "https://api.weibo.com/2";
 	/**
 	 * post请求方式
@@ -24,17 +26,21 @@ public abstract class WeiboAPI {
 	public static final String HTTPMETHOD_GET = "GET";
 	private Oauth2AccessToken oAuth2accessToken;
 	private String accessToken;
+
 	/**
 	 * 构造函数，使用各个API接口提供的服务前必须先获取Oauth2AccessToken
-	 * @param accesssToken Oauth2AccessToken
+	 * 
+	 * @param accesssToken
+	 *            Oauth2AccessToken
 	 */
-	public WeiboAPI(Oauth2AccessToken oauth2AccessToken){
-	    this.oAuth2accessToken=oauth2AccessToken;
-	    if(oAuth2accessToken!=null){
-	        accessToken=oAuth2accessToken.getToken();
-	    }
-	   
+	public WeiboAPI(Oauth2AccessToken oauth2AccessToken) {
+		this.oAuth2accessToken = oauth2AccessToken;
+		if (oAuth2accessToken != null) {
+			accessToken = oAuth2accessToken.getToken();
+		}
+
 	}
+
 	public enum FEATURE {
 		ALL, ORIGINAL, PICTURE, VIDEO, MUSICE
 	}
@@ -88,55 +94,56 @@ public abstract class WeiboAPI {
 	}
 
 	public enum COUNT_TYPE {
-	    /**
-	     * 新微博数
-	     */
-		STATUS, 
+		/**
+		 * 新微博数
+		 */
+		STATUS,
 		/**
 		 * 新粉丝数
 		 */
-		FOLLOWER, 
+		FOLLOWER,
 		/**
 		 * 新评论数
 		 */
-		CMT, 
+		CMT,
 		/**
 		 * 新私信数
 		 */
-		DM, 
+		DM,
 		/**
 		 * 新提及我的微博数
 		 */
-		MENTION_STATUS, 
+		MENTION_STATUS,
 		/**
 		 * 新提及我的评论数
 		 */
 		MENTION_CMT
 	}
+
 	/**
 	 * 分类
+	 * 
 	 * @author xiaowei6@staff.sina.com.cn
-	 *
+	 * 
 	 */
 	public enum SORT {
-	    Oauth2AccessToken, 
-	    SORT_AROUND
+		Oauth2AccessToken, SORT_AROUND
 	}
 
 	public enum SORT2 {
 		SORT_BY_TIME, SORT_BY_HOT
 	}
-	
+
 	public enum SORT3 {
 		SORT_BY_TIME, SORT_BY_DISTENCE
 	}
-	
+
 	public enum COMMENTS_TYPE {
 		NONE, CUR_STATUSES, ORIGAL_STATUSES, BOTH
 	}
-	
-	protected void request( final String url, final WeiboParameters params,
-			final String httpMethod,RequestListener listener) {
+
+	protected void request(final String url, final WeiboParameters params,
+			final String httpMethod, RequestListener listener) {
 		params.add("access_token", accessToken);
 		AsyncWeiboRunner.request(url, params, httpMethod, listener);
 	}

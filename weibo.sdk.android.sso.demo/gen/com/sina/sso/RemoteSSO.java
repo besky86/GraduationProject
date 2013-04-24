@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: G:\\±œ“µ…Ëº∆\\weibo_android_sdk-master\\weibo.sdk.android.sso.demo\\src-sso\\com\\sina\\sso\\RemoteSSO.aidl
+ * Original file: G:\\GitHub\\GraduationProject\\weibo.sdk.android.sso.demo\\src-sso\\com\\sina\\sso\\RemoteSSO.aidl
  */
 package com.sina.sso;
 public interface RemoteSSO extends android.os.IInterface

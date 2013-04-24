@@ -37,6 +37,7 @@ public class TestActivity extends Activity {
         public void handleMessage(Message msg) {
             // call update gui method.
             switch (msg.what) {
+           
             case 1:
                 TestActivity.this.testView.setText(msg.getData().getString(
                         "response"));
