@@ -23,20 +23,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/main_bg"
         android:orientation="vertical" >
 
         <ImageView
             android:id="@+id/head_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:src="@drawable/user_head"
             android:text="@string/hello_world" />
 
+        <!--  
         <LinearLayout
-            
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -51,14 +51,26 @@
                 android:background="@drawable/input"
                 android:editable="false"
                 android:enabled="false" />
-            
-            <Button 
+
+            <Button
                 android:id="@+id/user_select_btn"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:background="@drawable/user_select_selector"
-                />
+                android:layout_height="wrap_content"
+                android:background="@drawable/user_select_selector" />
         </LinearLayout>
+        -->
+        
+        
+        <Spinner 
+            android:id="@+id/userInfo_spinner"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:background="@drawable/account_selete_bg"
+            
+            />
 
         <Button
             android:id="@+id/login_button"
