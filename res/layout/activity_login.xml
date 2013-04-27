@@ -35,30 +35,8 @@
             android:src="@drawable/user_head"
             android:text="@string/hello_world" />
 
-        <!--  
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="horizontal" >
+        <!-- 一个textview和一个按钮组成，但不符合设计-->  
 
-            <TextView
-                android:id="@+id/txt_login_show_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input"
-                android:editable="false"
-                android:enabled="false" />
-
-            <Button
-                android:id="@+id/user_select_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/user_select_selector" />
-        </LinearLayout>
-        -->
         
         
         <Spinner 
@@ -78,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="登录" />
+            android:text="@string/login_button" />
     </LinearLayout>
 
 </LinearLayout>

@@ -44,6 +44,30 @@
             android:name="com.weibo.sdk.android.demo.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.MainTabActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.HomeActivity"
+            android:label="@string/title_activity_home" >
+        </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.NewsActivity"
+            android:label="@string/title_activity_message" >
+        </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.MyInfoActivity"
+            android:label="@string/title_activity_my_info" >
+        </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.SearchActivity"
+            android:label="@string/title_activity_search" >
+        </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.MoreActivity"
+            android:label="@string/title_activity_more" >
+        </activity>
     </application>
 
 </manifest>

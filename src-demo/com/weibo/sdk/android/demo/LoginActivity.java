@@ -37,6 +37,8 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
@@ -97,6 +99,9 @@ public class LoginActivity extends Activity {
 		CookieSyncManager.createInstance(getApplicationContext());
 		CookieManager.getInstance().removeAllCookie();
 		// Add or Update by Lei@2013/04/22 UPD END
+		
+		 this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+	
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
@@ -215,9 +220,17 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				if (LoginActivity.accessToken.isSessionValid()) {
+
 				AccessTokenKeeper.keepAccessToken(LoginActivity.this,
 						new Oauth2AccessToken(user.getUserId(),
 								user.getToken(), user.getExpiresTime()));
+				
+				Intent intent = new Intent(LoginActivity.this, MainTabActivity.class);
+				LoginActivity.this.startActivity(intent);
+			
+				
+				}
 
 			}
 
@@ -254,10 +267,8 @@ public class LoginActivity extends Activity {
 
 				}
 
-				// 授权之后清楚所有与应用相关的Cookie
+				// 授权之后清除所有与应用相关的Cookie
 				// Add or Update by Lei@2013/04/22 UPD START
-				// CookieSyncManager.createInstance(getApplicationContext());
-				// CookieManager.getInstance().removeAllCookie();
 				CookieSyncManager.createInstance(getApplicationContext());
 				CookieManager.getInstance().removeAllCookie();
 				// Add or Update by Lei@2013/04/22 UPD END
@@ -308,27 +319,7 @@ public class LoginActivity extends Activity {
 			Log.v(TAG, "onComplete" + response);
 			try {
 				// Add or Update by Lei@2013/04/24 UPD START
-				// JSONObject jsonObject = new JSONObject(response);
-				// user.setUserName(jsonObject.getString("screen_name"));
-				// user.setUserId(accessToken.getUid());
-				// user.setToken(accessToken.getToken());
-				// user.setExpiresTime(accessToken.getExpiresTime());
-				// String url = jsonObject.getString("profile_image_url");
-				// // new Thread(new Runnable() {
-				//
-				// // @Override
-				// // public void run() {
-				// // // TODO Auto-generated method stub
-				//
-				// user.setUserIcon(NetUtil.getImage(url));
-				// Message message = new Message();
-				// message.obj = user;
-				// LoginActivity.this.h.sendMessage(message);
-				//
-				// // }
-				//
-				// // }).start();
-				// LoginActivity.this.service.insertUserInfo(user);
+
 				JSONObject jsonObject = new JSONObject(response);
 				user.setUserName(jsonObject.getString("screen_name"));
 				user.setUserId(accessToken.getUid());
@@ -336,7 +327,6 @@ public class LoginActivity extends Activity {
 				user.setExpiresTime(accessToken.getExpiresTime());
 				String url = jsonObject.getString("profile_image_url");
 				// new Thread(new Runnable() {
-
 				// @Override
 				// public void run() {
 				// // TODO Auto-generated method stub
