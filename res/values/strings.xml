@@ -44,5 +44,9 @@
     <string name="title_activity_my_info">MyInfoActivity</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_more">MoreActivity</string>
-
+    <string name="redirect_num">0</string>
+    <string name="comment_num">0</string>
+    <string name="resource">来自：新浪微博</string>
+    <string name="create_time">1分钟前</string>
+    <string name="bar_username">歪脖子看世界</string>
 </resources>

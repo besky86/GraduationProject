@@ -31,35 +31,35 @@
             android:orientation="horizontal" >
 
             <RadioButton
-                android:id="@+id/radio_button0"
+                android:id="@+id/radio_home"
                 style="@style/main_tab_bottom"
                 android:layout_marginTop="2.0dip"
                 android:drawableTop="@drawable/icon_1_n"
                 android:text="@string/main_home" />
 
             <RadioButton
-                android:id="@+id/radio_button1"
+                android:id="@+id/radio_news"
                 style="@style/main_tab_bottom"
                 android:layout_marginTop="2.0dip"
                 android:drawableTop="@drawable/icon_2_n"
                 android:text="@string/main_news" />
 
             <RadioButton
-                android:id="@+id/radio_button2"
+                android:id="@+id/radio_info"
                 style="@style/main_tab_bottom"
                 android:layout_marginTop="2.0dip"
                 android:drawableTop="@drawable/icon_3_n"
                 android:text="@string/main_my_info" />
 
             <RadioButton
-                android:id="@+id/radio_button3"
+                android:id="@+id/radio_search"
                 style="@style/main_tab_bottom"
                 android:layout_marginTop="2.0dip"
                 android:drawableTop="@drawable/icon_4_n"
                 android:text="@string/menu_search" />
 
             <RadioButton
-                android:id="@+id/radio_button4"
+                android:id="@+id/radio_more"
                 style="@style/main_tab_bottom"
                 android:layout_marginTop="2.0dip"
                 android:drawableTop="@drawable/icon_5_n"
