@@ -226,7 +226,8 @@ public class LoginActivity extends Activity {
 						new Oauth2AccessToken(user.getUserId(),
 								user.getToken(), user.getExpiresTime()));
 				
-				Intent intent = new Intent(LoginActivity.this, MainTabActivity.class);
+				//Intent intent = new Intent(LoginActivity.this, MainTabActivity.class);
+				Intent intent = new Intent(LoginActivity.this, TestActivity.class);
 				LoginActivity.this.startActivity(intent);
 			
 				
