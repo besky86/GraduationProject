@@ -1,5 +1,6 @@
 package com.weibo.sdk.android.entity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,13 +10,19 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.weibo.sdk.android.WeiboException;
+
+import com.weibo.sdk.android.api.UsersAPI;
+import com.weibo.sdk.android.demo.MainTabActivity;
 import com.weibo.sdk.android.demo.TestActivity;
+import com.weibo.sdk.android.net.RequestListener;
 import com.weibo.sdk.android.util.StringUtil;
 
 public class Status {
 
 	public final static String TAG = "Status";
 
+	String uid;
 	// 创建时间
 	String created_at;
 	// 微博ID
@@ -117,6 +124,7 @@ public class Status {
 		return list;
 
 	}
+
 	/**
 	 * getStatusByJSON(这里用一句话描述这个方法的作用) (这里描述这个方法适用条件 – 可选)
 	 * 
@@ -164,7 +172,10 @@ public class Status {
 			if (!jsonObject.isNull("user")) {
 				status.setUser(User.getUserByJSON(jsonObject
 						.getJSONObject("user")));
-
+			}
+			if (!jsonObject.isNull("uid")) {
+				status.setUid(jsonObject.getString("uid"));
+				
 			}
 
 			if (jsonObject.has("retweeted_status")) {
@@ -205,7 +216,6 @@ public class Status {
 		Log.v(TAG, "getStatusByJSON end");
 		return status;
 	}
-
 	public Status(String created_at, long id, long mid, String idstr,
 			String text, String source, boolean favorited, boolean truncated,
 			String in_reply_to_status_id, String in_reply_to_user_id,
@@ -252,6 +262,25 @@ public class Status {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	/**
+	 * uid
+	 * 
+	 * @return the uid
+	 * @since 1.0.0
+	 */
+
+	public String getUid() {
+		return uid;
+	}
+
+	/**
+	 * @param uid
+	 *            the uid to set
+	 */
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 	public long getMid() {
@@ -445,6 +474,44 @@ class Visible {
 
 	public void setList_id(int list_id) {
 		this.list_id = list_id;
+	}
+
+}
+
+class UsersRequestListener implements RequestListener {
+
+	private static final String TAG = "UserRequestListener";
+
+	Status s;
+
+	@Override
+	public void onComplete(String response) {
+		// TODO Auto-generated method stub
+
+		JSONObject jsonObject;
+		try {
+			jsonObject = new JSONObject(response);
+			User user = User.getUserByJSON(jsonObject);
+			s.setUser(user);
+		}
+		catch (JSONException e) {
+
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+
+	}
+	@Override
+	public void onIOException(IOException e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onError(WeiboException e) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

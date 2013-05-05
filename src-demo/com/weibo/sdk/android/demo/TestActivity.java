@@ -12,6 +12,8 @@ import com.weibo.sdk.android.Oauth2AccessToken;
 import com.weibo.sdk.android.WeiboException;
 import com.weibo.sdk.android.api.AccountAPI;
 import com.weibo.sdk.android.api.StatusesAPI;
+import com.weibo.sdk.android.api.WeiboAPI;
+import com.weibo.sdk.android.demo.HomeActivity.StatusesRequestListener;
 import com.weibo.sdk.android.entity.Status;
 import com.weibo.sdk.android.net.RequestListener;
 
@@ -50,8 +52,11 @@ public class TestActivity extends Activity {
 					JSONArray jsonArray;
 					List<Status> statusList = Status.getStatusesList((msg
 							.getData().getString("response")));
+					Log.v(TAG,statusList.get(0)
+							.getUser().getScreen_name());
 					TestActivity.this.testView.setText(statusList.get(0)
-							.getIdstr());
+							.getUser().getScreen_name());
+					// .getIdstr());
 
 					// Delete by Lei@2013/04/23 DEL START
 					// TestActivity.this.testView.setText(msg.getData().getString(
@@ -76,7 +81,10 @@ public class TestActivity extends Activity {
 			// account.getUid(new UIDRequestListener());
 			StatusesAPI statuses = new StatusesAPI(accessToken);
 
-			statuses.publicTimeline(20, 1, false, new StatusRequestListener());
+			statuses.friendsTimeline(0l, 3574567505651357l, 50, 1, false,
+					WeiboAPI.FEATURE.ALL, true, new StatusesRequestListener());
+			// statuses.publicTimeline(20, 1, false, new
+			// StatusRequestListener());
 
 		}
 	}
@@ -149,4 +157,35 @@ public class TestActivity extends Activity {
 		getMenuInflater().inflate(R.menu.test, menu);
 		return true;
 	}
+
+	class StatusesRequestListener implements RequestListener {
+
+		@Override
+		public void onComplete(String response) {
+			// TODO Auto-generated method stub
+
+			Log.v(TAG, response);
+			Message message = new Message();
+			Bundle bundle = new Bundle();
+			bundle.putString("response", response);
+			message.setData(bundle);
+			 message.what = 2;
+			TestActivity.this.h.sendMessage(message);
+			// testView.setText(response);
+		}
+
+		@Override
+		public void onIOException(IOException e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onError(WeiboException e) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
+
 }

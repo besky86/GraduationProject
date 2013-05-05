@@ -1,5 +1,7 @@
 package com.weibo.sdk.android;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,7 +12,15 @@ import android.text.TextUtils;
  * 
  * @author luopeng (luopeng@staff.sina.com.cn)
  */
-public class Oauth2AccessToken {
+public class Oauth2AccessToken implements Serializable {
+
+	/**
+	 * serialVersionUID:TODO
+	 * 
+	 * @since 1.0.0
+	 */
+
+	private static final long serialVersionUID = -3534576560614660147L;
 
 	// 添加用户的UID
 	// added by Lei@2013/04/12 UPD START

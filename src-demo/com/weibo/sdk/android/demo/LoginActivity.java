@@ -99,9 +99,8 @@ public class LoginActivity extends Activity {
 		CookieSyncManager.createInstance(getApplicationContext());
 		CookieManager.getInstance().removeAllCookie();
 		// Add or Update by Lei@2013/04/22 UPD END
-		
-		 this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-	
+
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
@@ -110,37 +109,16 @@ public class LoginActivity extends Activity {
 		refresh();
 
 		setListeners();
-		// Delete by Lei@2013/04/25 DEL START
-		// selectButton = (Button) findViewById(R.id.user_select_btn);
-		// selectButton.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// // TODO Auto-generated method stub
-		// View viewDialog = View.inflate(LoginActivity.this,
-		// R.layout.user_select_dialog, null);
-		//
-		// Dialog dialog = new Dialog(LoginActivity.this,
-		// R.style.user_select_style);
-		// dialog.setContentView(viewDialog);
-		//
-		// dialog.show();
-		//
-		// ListView listView = (ListView) viewDialog
-		// .findViewById(R.id.user_list);
-		//
-		// }
-		//
-		// });
-		// Delete by Lei@2013/04/25 DEL END
-
-		if (null == users || users.isEmpty()) {
-			buttonLogin.setEnabled(false);
-
-		}
-		else {
-
-		}
+	
+		//Delete by Lei@2013/05/05 DEL START
+		//if (null == users || users.isEmpty()) {
+		//	buttonLogin.setEnabled(false);
+//
+		//}
+		//else {
+//
+		//}
+		//Delete by Lei@2013/05/05 DEL END
 
 	}
 	@Override
@@ -222,15 +200,22 @@ public class LoginActivity extends Activity {
 				// TODO Auto-generated method stub
 				if (LoginActivity.accessToken.isSessionValid()) {
 
-				AccessTokenKeeper.keepAccessToken(LoginActivity.this,
-						new Oauth2AccessToken(user.getUserId(),
-								user.getToken(), user.getExpiresTime()));
-				
-				//Intent intent = new Intent(LoginActivity.this, MainTabActivity.class);
-				Intent intent = new Intent(LoginActivity.this, TestActivity.class);
-				LoginActivity.this.startActivity(intent);
-			
-				
+					AccessTokenKeeper.keepAccessToken(
+							LoginActivity.this,
+							new Oauth2AccessToken(user.getUserId(), user
+									.getToken(), user.getExpiresTime()));
+
+					Intent intent = new Intent(LoginActivity.this,
+					 MainTabActivity.class);
+					 //Intent intent = new Intent(LoginActivity.this,
+				//	TestActivity.class);
+					//Add or Update by Lei@2013/05/05 UPD START
+					//intent.putExtra("AccessToken", LoginActivity.accessToken);
+					intent.putExtra("AccessToken", LoginActivity.accessToken);
+					//Add or Update by Lei@2013/05/05 UPD END
+					LoginActivity.this.startActivity(intent);
+					// LoginActivity.this.finish( );
+
 				}
 
 			}
@@ -275,17 +260,8 @@ public class LoginActivity extends Activity {
 				// Add or Update by Lei@2013/04/22 UPD END
 				Toast.makeText(LoginActivity.this, "认证成功", Toast.LENGTH_SHORT)
 						.show();
-				// Delete by Lei@2013/04/24 DEL START
-				// Intent intent = new Intent(LoginActivity.this,
-				// TestActivity.class);
-				// LoginActivity.this.startActivity(intent);
-				// Delete by Lei@2013/04/24 DEL END
 
 			}
-			// added by Lei@2013/04/19 UPD START
-			// LoginActivity.accessToken = null;
-
-			// added by Lei@2013/04/19 UPD END
 
 		}
 

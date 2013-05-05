@@ -194,6 +194,7 @@ public final class R {
         public static final int bar_username=0x7f08002f;
         public static final int comment_num=0x7f08002c;
         public static final int create_time=0x7f08002e;
+        public static final int default_user_name=0x7f080030;
         public static final int dummy_button=0x7f08001d;
         public static final int dummy_content=0x7f08001e;
         public static final int hello_world=0x7f08001b;

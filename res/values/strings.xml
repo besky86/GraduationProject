@@ -49,4 +49,5 @@
     <string name="resource">来自：新浪微博</string>
     <string name="create_time">1分钟前</string>
     <string name="bar_username">歪脖子看世界</string>
+    <string name="default_user_name">新浪</string>
 </resources>

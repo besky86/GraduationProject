@@ -1,5 +1,7 @@
 package com.weibo.sdk.android.demo;
 
+import com.weibo.sdk.android.Oauth2AccessToken;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.TabActivity;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 public class MainTabActivity extends TabActivity
 		implements
 			OnCheckedChangeListener {
+	public static Oauth2AccessToken accessToken;
 	private RadioGroup mainTab;
 	private TabHost tabhost;
 	private Intent iHome;
@@ -28,11 +31,20 @@ public class MainTabActivity extends TabActivity
 	private final String SEARCH_TAB = "Search";
 	private final String MORE_TAB = "More";
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
+		// Add or Update by Lei@2013/05/05 UPD START
+		// Intent intent = MainTabActivity.this.getIntent();
+		// accessToken = (Oauth2AccessToken) intent
+		// .getSerializableExtra("AccessToken");
+		Intent intent = MainTabActivity.this.getIntent();
+		accessToken = (Oauth2AccessToken) intent
+				.getSerializableExtra("AccessToken");
+		// Add or Update by Lei@2013/05/05 UPD END
 		mainTab = (RadioGroup) findViewById(R.id.main_tab);
 		mainTab.setOnCheckedChangeListener(this);
 		tabhost = getTabHost();
