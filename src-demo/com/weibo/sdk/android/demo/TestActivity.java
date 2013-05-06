@@ -16,6 +16,7 @@ import com.weibo.sdk.android.api.WeiboAPI;
 import com.weibo.sdk.android.demo.HomeActivity.StatusesRequestListener;
 import com.weibo.sdk.android.entity.Status;
 import com.weibo.sdk.android.net.RequestListener;
+import com.weibo.sdk.android.util.SimpleImageLoader;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +24,7 @@ import android.os.Message;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -52,8 +54,7 @@ public class TestActivity extends Activity {
 					JSONArray jsonArray;
 					List<Status> statusList = Status.getStatusesList((msg
 							.getData().getString("response")));
-					Log.v(TAG,statusList.get(0)
-							.getUser().getScreen_name());
+					Log.v(TAG, statusList.get(0).getUser().getScreen_name());
 					TestActivity.this.testView.setText(statusList.get(0)
 							.getUser().getScreen_name());
 					// .getIdstr());
@@ -76,13 +77,17 @@ public class TestActivity extends Activity {
 		testView = (TextView) TestActivity.this.findViewById(R.id.test);
 		Oauth2AccessToken accessToken = LoginActivity.accessToken;
 
+		ImageView a = (ImageView) this.findViewById(R.id.ivt);
 		if (null != accessToken) {
+			SimpleImageLoader.showImg(
+					"http://tp2.sinaimg.cn/2155035021/50/5638062468/1", a);
+
 			// AccountAPI account = new AccountAPI(accessToken);
 			// account.getUid(new UIDRequestListener());
-			StatusesAPI statuses = new StatusesAPI(accessToken);
+			// StatusesAPI statuses = new StatusesAPI(accessToken);
 
-			statuses.friendsTimeline(0l, 3574567505651357l, 50, 1, false,
-					WeiboAPI.FEATURE.ALL, true, new StatusesRequestListener());
+			// statuses.friendsTimeline(0l, 3574567505651357l, 50, 1, false,
+			// WeiboAPI.FEATURE.ALL, true, new StatusesRequestListener());
 			// statuses.publicTimeline(20, 1, false, new
 			// StatusRequestListener());
 
@@ -169,7 +174,7 @@ public class TestActivity extends Activity {
 			Bundle bundle = new Bundle();
 			bundle.putString("response", response);
 			message.setData(bundle);
-			 message.what = 2;
+			message.what = 2;
 			TestActivity.this.h.sendMessage(message);
 			// testView.setText(response);
 		}

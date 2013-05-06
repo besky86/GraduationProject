@@ -5,9 +5,13 @@ import java.util.List;
 import com.weibo.sdk.android.demo.R;
 
 import com.weibo.sdk.android.entity.*;
+import com.weibo.sdk.android.util.AsynImageLoader;
+import com.weibo.sdk.android.util.ImageCallback;
+import com.weibo.sdk.android.util.SimpleImageLoader;
 import com.weibo.sdk.android.util.StringUtil;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
@@ -101,12 +105,57 @@ public class WeiboAdapter extends BaseAdapter {
 				.findViewById(R.id.txt_wb_item_content);
 		holder.txt_wb_item_from = (TextView) view
 				.findViewById(R.id.txt_wb_item_from);
+		holder.img_wb_item_head = (ImageView) view
+				.findViewById(R.id.img_wb_item_head);
+
+		holder.img_wb_item_head = (ImageView) view
+				.findViewById(R.id.img_wb_item_head);
+
 		// holder.img_wb_item_head = (ImageView) view
 		// .findViewById(R.id.img_wb_item_head);
 		// holder.txt_wb_item_from.setMovementMethod(LinkMovementMethod
 		// .getInstance());
 
-		holder.txt_wb_item_uname.setText(s.getUid());
+		Log.v("Image", holder.img_wb_item_head.toString());
+
+		if (s.getUser() == null) {
+			holder.txt_wb_item_uname.setText(s.getUid());
+		}
+		else {
+			Log.v("Userid", s.getUser().getProfile_image_url());
+			holder.txt_wb_item_uname.setText(s.getUser().getScreen_name());
+			Log.v("Userid", s.getUser().getIdstr());
+			Drawable image = AsynImageLoader.loadDrawable(s.getUser()
+					.getProfile_image_url(), holder.img_wb_item_head,
+					new ImageCallback() {
+
+						@Override
+						public void imageSet(Drawable drawable,
+								ImageView imageView) {
+
+							// TODO Auto-generated method stub
+							imageView.setImageDrawable(drawable);
+						}
+					});
+
+			if (image == null) {
+				holder.img_wb_item_head.setImageResource(R.drawable.usericon);
+			}
+			else {
+				holder.img_wb_item_head.setImageDrawable(image);
+			}
+
+			// 判断是否通过认证
+			if (s.getUser().isVerified()) {
+				holder.img_wb_item_V = (ImageView) view
+						.findViewById(R.id.img_wb_item_V);
+				holder.img_wb_item_V.setVisibility(View.VISIBLE);
+			}
+
+			// SimpleImageLoader.showImg(s.getUser().getProfile_image_url(),
+			// holder.img_wb_item_head);
+
+		}
 
 		holder.txt_wb_item_content.setText(StringUtil.getSpannableString(s
 				.getText()));
@@ -119,12 +168,6 @@ public class WeiboAdapter extends BaseAdapter {
 				.findViewById(R.id.txt_wb_item_time);
 		holder.txt_wb_item_time.setText(s.getCreated_at());
 
-		// // 判断是否通过认证
-		// if (s.getUser().isVerified()) {
-		// holder.img_wb_item_V = (ImageView) view
-		// .findViewById(R.id.img_wb_item_V);
-		// holder.img_wb_item_V.setVisibility(View.VISIBLE);
-		// }
 		// Delete by Lei@2013/05/05 DEL END
 
 		// 判断微博中是否含有图片
@@ -132,6 +175,25 @@ public class WeiboAdapter extends BaseAdapter {
 			holder.img_wb_item_content_pic = (ImageView) view
 					.findViewById(R.id.img_wb_item_content_pic);
 			holder.img_wb_item_content_pic.setVisibility(View.VISIBLE);
+			Drawable image = AsynImageLoader.loadDrawable(s.getThumbnail_pic(),
+					holder.img_wb_item_content_pic, new ImageCallback() {
+
+						@Override
+						public void imageSet(Drawable drawable,
+								ImageView imageView) {
+
+							// TODO Auto-generated method stub
+							imageView.setImageDrawable(drawable);
+						}
+					});
+
+			if (image == null) {
+				holder.img_wb_item_content_pic
+						.setImageResource(R.drawable.detail_pic_loading);
+			}
+			else {
+				holder.img_wb_item_content_pic.setImageDrawable(image);
+			}
 		}
 
 		// 判断是否是转发
@@ -151,9 +213,40 @@ public class WeiboAdapter extends BaseAdapter {
 				holder.img_wb_item_content_subpic = (ImageView) view
 						.findViewById(R.id.img_wb_item_content_subpic);
 				holder.img_wb_item_content_subpic.setVisibility(View.VISIBLE);
+
+				Drawable image = AsynImageLoader.loadDrawable(s
+						.getRetweeted_status().getThumbnail_pic(),
+						holder.img_wb_item_content_subpic, new ImageCallback() {
+
+							@Override
+							public void imageSet(Drawable drawable,
+									ImageView imageView) {
+
+								// TODO Auto-generated method stub
+								imageView.setImageDrawable(drawable);
+							}
+						});
+
+				if (image == null) {
+					holder.img_wb_item_content_subpic
+							.setImageResource(R.drawable.detail_pic_loading);
+				}
+				else {
+					holder.img_wb_item_content_subpic.setImageDrawable(image);
+				}
 			}
 
 		}
+
+		holder.txt_wb_item_comment = (TextView) view
+				.findViewById(R.id.txt_wb_item_comment1);
+		Log.v("com", "" + s.getComments_count());
+		holder.txt_wb_item_comment.setText("" + s.getComments_count());
+
+		holder.txt_wb_item_reposed = (TextView) view
+				.findViewById(R.id.txt_wb_item_reposed);
+		holder.txt_wb_item_reposed.setText("" + s.getReposts_count());
+
 	}
 
 	static class WeiboHolder {
@@ -178,7 +271,7 @@ public class WeiboAdapter extends BaseAdapter {
 
 		TextView txt_wb_item_from;
 
-		TextView txt_wb_item_redirect;
+		TextView txt_wb_item_reposed;
 
 		TextView txt_wb_item_comment;
 

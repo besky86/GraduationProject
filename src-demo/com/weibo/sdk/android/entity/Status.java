@@ -1,6 +1,7 @@
 package com.weibo.sdk.android.entity;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,15 @@ import com.weibo.sdk.android.demo.TestActivity;
 import com.weibo.sdk.android.net.RequestListener;
 import com.weibo.sdk.android.util.StringUtil;
 
-public class Status {
+public class Status implements Serializable {
+
+	/**
+	 * serialVersionUID:TODO
+	 * 
+	 * @since 1.0.0
+	 */
+
+	private static final long serialVersionUID = 1L;
 
 	public final static String TAG = "Status";
 
@@ -175,7 +184,7 @@ public class Status {
 			}
 			if (!jsonObject.isNull("uid")) {
 				status.setUid(jsonObject.getString("uid"));
-				
+
 			}
 
 			if (jsonObject.has("retweeted_status")) {

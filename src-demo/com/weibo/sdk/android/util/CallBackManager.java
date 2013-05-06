@@ -64,6 +64,8 @@ public class CallBackManager {
 		}
 		callbackMap.get(url).add(callback);
 	}
+	
+	
 	public void callback(String url, Bitmap bitmap) {
 
 		List<ImageLoaderCallback> callbacks = callbackMap.get(url);

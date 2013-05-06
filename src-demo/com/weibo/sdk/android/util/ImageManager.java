@@ -90,7 +90,8 @@ public class ImageManager {
 
 		// TODO Auto-generated method stub
 
-		String fileName = this.getMd5(url);
+		// String fileName = this.getMd5(url);
+		String fileName = url;
 
 		FileInputStream is = null;
 
@@ -156,7 +157,7 @@ public class ImageManager {
 			}
 			return bitmap;
 		}
-		
+
 		return downloadImage(url);
 	}
 

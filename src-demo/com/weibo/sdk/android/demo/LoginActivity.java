@@ -56,7 +56,7 @@ import com.weibo.sdk.android.net.RequestListener;
 public class LoginActivity extends Activity {
 
 	private UserInfoService service;
-	private UserInfo user;
+	private UserInfo user =new UserInfo( );
 	private ImageView image;
 
 	private Spinner spinner;
@@ -109,16 +109,16 @@ public class LoginActivity extends Activity {
 		refresh();
 
 		setListeners();
-	
-		//Delete by Lei@2013/05/05 DEL START
-		//if (null == users || users.isEmpty()) {
-		//	buttonLogin.setEnabled(false);
-//
-		//}
-		//else {
-//
-		//}
-		//Delete by Lei@2013/05/05 DEL END
+
+		// Delete by Lei@2013/05/05 DEL START
+		// if (null == users || users.isEmpty()) {
+		// buttonLogin.setEnabled(false);
+		//
+		// }
+		// else {
+		//
+		// }
+		// Delete by Lei@2013/05/05 DEL END
 
 	}
 	@Override
@@ -131,6 +131,10 @@ public class LoginActivity extends Activity {
 	public void refresh() {
 		users = service.findAllUsers();
 		user = service.getUserInfoByUserId(accessToken.getUid());
+
+		if (users == null || users.isEmpty()) {
+			return;
+		}
 
 		for (UserInfo userInfo : users) {
 			if (userInfo.getUserId().equals(accessToken.getUid())) {
@@ -206,13 +210,13 @@ public class LoginActivity extends Activity {
 									.getToken(), user.getExpiresTime()));
 
 					Intent intent = new Intent(LoginActivity.this,
-					 MainTabActivity.class);
-					 //Intent intent = new Intent(LoginActivity.this,
-				//	TestActivity.class);
-					//Add or Update by Lei@2013/05/05 UPD START
-					//intent.putExtra("AccessToken", LoginActivity.accessToken);
+							MainTabActivity.class);
+					// Intent intent = new Intent(LoginActivity.this,
+					// TestActivity.class);
+					// Add or Update by Lei@2013/05/05 UPD START
 					intent.putExtra("AccessToken", LoginActivity.accessToken);
-					//Add or Update by Lei@2013/05/05 UPD END
+					intent.putExtra("AccessToken", LoginActivity.accessToken);
+					// Add or Update by Lei@2013/05/05 UPD END
 					LoginActivity.this.startActivity(intent);
 					// LoginActivity.this.finish( );
 
@@ -298,6 +302,7 @@ public class LoginActivity extends Activity {
 				// Add or Update by Lei@2013/04/24 UPD START
 
 				JSONObject jsonObject = new JSONObject(response);
+				user = new UserInfo( );
 				user.setUserName(jsonObject.getString("screen_name"));
 				user.setUserId(accessToken.getUid());
 				user.setToken(accessToken.getToken());
