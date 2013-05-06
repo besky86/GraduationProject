@@ -50,4 +50,7 @@
     <string name="create_time">1分钟前</string>
     <string name="bar_username">歪脖子看世界</string>
     <string name="default_user_name">新浪</string>
+    <string name="title_activity_write_weibo">WriteWeiboActivity</string>
+    <string name="write_text">发表新微博</string>
+
 </resources>

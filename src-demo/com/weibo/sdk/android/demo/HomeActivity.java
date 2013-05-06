@@ -21,9 +21,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 
 public class HomeActivity extends Activity {
@@ -34,6 +37,8 @@ public class HomeActivity extends Activity {
 	// private View progresView;
 
 	private View titleView;
+	private Button btn_write;
+	private Button btn_refresh;
 
 	private ListView weiboListView;
 
@@ -61,18 +66,63 @@ public class HomeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		weiboListView = (ListView) findViewById(R.id.lv_weibos);
-		
+		// weiboListView = (ListView) findViewById(R.id.lv_weibos);
+		getViews();
+		addListeners();
 		showStatuses();
 
 	}
 
+	private void getViews() {
+		weiboListView = (ListView) findViewById(R.id.lv_weibos);
+		btn_write = (Button) findViewById(R.id.btn_writer);
+		btn_refresh = (Button) findViewById(R.id.btn_refresh);
+
+	}
+
 	/**
-	 * showStatuses 显示最新微博
-	 *void
-	 * @exception 
-	 * @since  1.0.0
-	*/
+	 * 
+	 * addListeners 给组件绑定监听器 void
+	 * 
+	 * @exception
+	 * @since 1.0.0
+	 */
+	private void addListeners() {
+		// 转到写微博界面
+		btn_write.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(HomeActivity.this,
+						WriteWeiboActivity.class);
+				HomeActivity.this.startActivity(intent);
+
+			}
+
+		});
+
+		// 更新微博
+		btn_refresh.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				// TODO Auto-generated method stub
+				showStatuses();
+
+			}
+
+		});
+
+	}
+	/**
+	 * showStatuses 显示最新微博 void
+	 * 
+	 * @exception
+	 * @since 1.0.0
+	 */
 	private void showStatuses() {
 		if (null != MainTabActivity.accessToken) {
 			// AccountAPI account = new AccountAPI(accessToken);
