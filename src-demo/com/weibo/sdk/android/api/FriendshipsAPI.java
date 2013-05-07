@@ -35,7 +35,7 @@ public class FriendshipsAPI extends WeiboAPI {
 		} else {
 			params.add("trim_status", 0);
 		}
-		request( SERVER_URL_PRIX + "/friends.json", params, HTTPMETHOD_GET, listener);
+		super.request( SERVER_URL_PRIX + "/friends.json", params, HTTPMETHOD_GET, listener);
 	}
 
 	/**

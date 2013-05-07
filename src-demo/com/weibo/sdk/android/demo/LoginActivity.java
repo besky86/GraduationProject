@@ -56,7 +56,7 @@ import com.weibo.sdk.android.net.RequestListener;
 public class LoginActivity extends Activity {
 
 	private UserInfoService service;
-	private UserInfo user =new UserInfo( );
+	private UserInfo user = new UserInfo();
 	private ImageView image;
 
 	private Spinner spinner;
@@ -202,7 +202,8 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (LoginActivity.accessToken.isSessionValid()) {
+				if (LoginActivity.accessToken.isSessionValid()
+						&& LoginActivity.accessToken != null && user != null) {
 
 					AccessTokenKeeper.keepAccessToken(
 							LoginActivity.this,
@@ -236,6 +237,7 @@ public class LoginActivity extends Activity {
 			String uid = values.getString("uid");
 			LoginActivity.accessToken = new Oauth2AccessToken(token,
 					expires_in, uid);
+			Log.v("token", token);
 			// added by Lei@2013/04/12 UPD END
 
 			// delete by Lei@2013/04/12 DEL START
@@ -302,7 +304,7 @@ public class LoginActivity extends Activity {
 				// Add or Update by Lei@2013/04/24 UPD START
 
 				JSONObject jsonObject = new JSONObject(response);
-				user = new UserInfo( );
+				user = new UserInfo();
 				user.setUserName(jsonObject.getString("screen_name"));
 				user.setUserId(accessToken.getUid());
 				user.setToken(accessToken.getToken());

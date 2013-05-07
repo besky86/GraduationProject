@@ -19,7 +19,7 @@
         android:src="@drawable/btn_insert_pic_nor" />
 
     <ImageButton
-        android:id="@+id/btn_tool_title"
+        android:id="@+id/btn_tool_topic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/title_group_middle_bg"

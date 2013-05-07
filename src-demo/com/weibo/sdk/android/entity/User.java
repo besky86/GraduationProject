@@ -1,7 +1,13 @@
 package com.weibo.sdk.android.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.util.Log;
 
 //added   by Lei@2013/04/16 UPD START
 //public class User {
@@ -434,6 +440,31 @@ public class User {
 		this.lang = lang;
 	}
 
+	public static List<User> getUsersList(String statusesJSON) {
+		Log.v("User", "getStatusedList start");
+		JSONArray jsonArray;
+		ArrayList<User> list = new ArrayList<User>();
+		try {
+			jsonArray = new JSONObject(statusesJSON).getJSONArray("users");
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jsonObject = (JSONObject) jsonArray.opt(i);
+				User user = User.getUserByJSON(jsonObject);
+
+				list.add(user);
+				Log.v("USer", jsonObject.toString());
+			}
+
+		}
+		catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Log.v("User", "getUsersList  end");
+		return list;
+
+	}
 	/**
 	 * getUserByJSON 从JSON对象获取一个User示例
 	 * 

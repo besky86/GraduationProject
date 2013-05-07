@@ -156,7 +156,7 @@ public final class R {
         public static final int btn_tool_camera=0x7f0a0028;
         public static final int btn_tool_face=0x7f0a002b;
         public static final int btn_tool_locate=0x7f0a0027;
-        public static final int btn_tool_title=0x7f0a0029;
+        public static final int btn_tool_topic=0x7f0a0029;
         public static final int btn_writer=0x7f0a0016;
         public static final int et_content=0x7f0a000f;
         public static final int head_icon=0x7f0a0003;
