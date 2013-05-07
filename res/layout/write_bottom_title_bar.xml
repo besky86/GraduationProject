@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <ImageButton
+        android:id="@+id/btn_tool_locate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_group_left_bg"
+        android:src="@drawable/btn_insert_location_nor" />
+
+    <ImageButton
+        android:id="@+id/btn_tool_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_group_middle_bg"
+        android:src="@drawable/btn_insert_pic_nor" />
+
+    <ImageButton
+        android:id="@+id/btn_tool_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_group_middle_bg"
+        android:src="@drawable/btn_insert_topic_nor" />
+
+    <ImageButton
+        android:id="@+id/btn_tool_at"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_group_middle_bg"
+        android:src="@drawable/btn_insert_at_nor" />
+
+    <ImageButton
+        android:id="@+id/btn_tool_face"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@drawable/title_group_right_bg"
+        android:src="@drawable/btn_insert_face_nor" />
+
+</LinearLayout>

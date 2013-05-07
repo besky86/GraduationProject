@@ -52,5 +52,7 @@
     <string name="default_user_name">新浪</string>
     <string name="title_activity_write_weibo">WriteWeiboActivity</string>
     <string name="write_text">发表新微博</string>
+    <string name="write_hint">说点什么吧。。。。。。</string>
+    <string name="max_num">140</string>
 
 </resources>
