@@ -238,11 +238,13 @@ public class HomeActivity extends Activity {
 		public void onIOException(IOException e) {
 			// TODO Auto-generated method stub
 
+			Util.showToast(HomeActivity.this, "获取数据异常");
 		}
 
 		@Override
 		public void onError(WeiboException e) {
 			// TODO Auto-generated method stub
+			Util.showToast(HomeActivity.this, "失败");
 
 		}
 

@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.weibo.sdk.android.util.NetUtil;
+import com.weibo.sdk.android.util.Tools;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
 import com.weibo.sdk.android.Weibo;
@@ -315,7 +316,8 @@ public class LoginActivity extends Activity {
 				// public void run() {
 				// // TODO Auto-generated method stub
 
-				user.setUserIcon(NetUtil.getImage(url));
+				
+				user.setUserIcon(Tools.getDrawablFromUrl(url));
 				Message message = new Message();
 				message.obj = user;
 				LoginActivity.this.h.sendMessage(message);

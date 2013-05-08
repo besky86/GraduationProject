@@ -52,6 +52,8 @@ import android.widget.Toast;
 
 public class WriteWeiboActivity extends Activity implements DialogListener {
 
+	private File filePic;
+
 	private Button btn_send;
 	private ImageView inserted_iv;
 	private Button btn_clear;
@@ -90,7 +92,7 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 				index++;
 			}
 
-		//	addListeners();
+			// addListeners();
 
 			// getUsers(statusList);
 
@@ -124,6 +126,7 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 
 	private void getViews() {
 
+		btn_insert_pic = (ImageButton) findViewById(R.id.btn_tool_camera);
 		btn_send = (Button) findViewById(R.id.btn_send);
 		inserted_iv = (ImageView) findViewById(R.id.add_image_iv);
 		btn_clear = (Button) findViewById(R.id.btn_clear);
@@ -147,8 +150,15 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 				String content = et_content.getText().toString();
 				StatusesAPI statusAPI = new StatusesAPI(
 						MainTabActivity.accessToken);
-				statusAPI.update(content, "0.0", "0.0",
-						new UpdateStatusRequestListener());
+				if (filePic != null) {
+
+					statusAPI.upload(content, filePic.getAbsoluteFile()
+							.toString(), "0.0", "0.0",
+							new UpdateStatusRequestListener());
+				}
+				else
+					statusAPI.update(content, "0.0", "0.0",
+							new UpdateStatusRequestListener());
 
 			}
 
@@ -338,13 +348,13 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 
 				// TODO Auto-generated method stub
 
-				final CharSequence[] choices ={"相机拍摄", "本地相册"};
+				final CharSequence[] choices = {"相机拍摄", "本地相册"};
 				final AlertDialog.Builder builder = new AlertDialog.Builder(
 						WriteWeiboActivity.this);
 
-				builder.setTitle("好友列表")
+				builder.setTitle("设置")
 						// 标题
-						.setIcon(R.drawable.btn_insert_at_nor)
+						.setIcon(R.drawable.btn_insert_pic_nor)
 						// icon
 						.setItems(
 								choices,
@@ -352,6 +362,57 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 									@Override
 									public void onClick(DialogInterface dialog,
 											int which) {
+										dialog.dismiss();
+										switch (which) {
+											case 0 : {
+												String status = Environment
+														.getExternalStorageState();
+												if (status
+														.equals(Environment.MEDIA_MOUNTED)) {// 判断是否有SD卡
+													Intent i = new Intent(
+															MediaStore.ACTION_IMAGE_CAPTURE);
+													capturefile = new File(
+															PHOTO_DIR,
+															getPhotoFileName());
+													try {
+														capturefile
+																.createNewFile();
+														i.putExtra(
+																MediaStore.EXTRA_OUTPUT,
+																Uri.fromFile(capturefile));// 将拍摄的照片信息存到capturefile中
+													}
+													catch (IOException e) {
+														// TODO Auto-generated
+														// catch block
+														e.printStackTrace();
+													}
+
+													startActivityForResult(i,
+															PHOTO_WITH_CAMERA);// 用户点击了从照相机获取
+												}
+												else {
+													Util.showToast(
+															WriteWeiboActivity.this,
+															"没有SD卡");
+												}
+												break;
+
+											}
+											case 1 :// 从相册中去获取
+												Intent intent = new Intent();
+												/* 开启Pictures画面Type设定为image */
+												intent.setType("image/*");
+												/*
+												 * 使用Intent.
+												 * ACTION_GET_CONTENT这个Action
+												 */
+												intent.setAction(Intent.ACTION_GET_CONTENT);
+												/* 取得相片后返回本画面 */
+												startActivityForResult(intent,
+														PHOTO_WITH_DATA);
+												break;
+										}
+
 									}
 								});
 				// 创建Dialog对象
@@ -385,12 +446,13 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 		public void onIOException(IOException e) {
 			// TODO Auto-generated method stub
 
+			Util.showToast(WriteWeiboActivity.this, "发表动态异常");
 		}
 
 		@Override
 		public void onError(WeiboException e) {
 			// TODO Auto-generated method stub
-
+			Util.showToast(WriteWeiboActivity.this, "发表动态失败");
 		}
 
 	}
@@ -456,6 +518,7 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 					System.out.println(picPath);
 					file = new File(picPath);
 					pic = decodeFile(file);
+				//	WriteWeiboActivity.this.filePic =file;
 					inserted_iv.setImageBitmap(pic);
 					System.out.println("++++++相机+++++");
 					break;
@@ -468,6 +531,7 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 						System.out.println(picPath);
 						file = new File(picPath);
 						pic = decodeFile(file);
+					//	WriteWeiboActivity.this.filePic = file;
 						inserted_iv.setImageBitmap(pic);
 					}
 					else
@@ -477,11 +541,16 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 							cursor.moveToFirst();
 							picPath = cursor.getString(1);
 							file = new File(picPath);
+						//	WriteWeiboActivity.this.filePic= file;
 							pic = decodeFile(file);
 							inserted_iv.setImageBitmap(pic);
+
 						}
 					break;
 			}
+			
+			inserted_iv.setVisibility(View.VISIBLE);
+			WriteWeiboActivity.this.filePic = file;
 
 		}
 		super.onActivityResult(requestCode, resultCode, data);
