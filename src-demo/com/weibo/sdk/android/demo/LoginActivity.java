@@ -217,7 +217,10 @@ public class LoginActivity extends Activity {
 					// TestActivity.class);
 					// Add or Update by Lei@2013/05/05 UPD START
 					intent.putExtra("AccessToken", LoginActivity.accessToken);
-					intent.putExtra("AccessToken", LoginActivity.accessToken);
+					intent.putExtra("username", user.getUserName());
+					intent.putExtra("user_id", user.getId());
+					
+				//	intent.putExtra("AccessToken", LoginActivity.accessToken);
 					// Add or Update by Lei@2013/05/05 UPD END
 					LoginActivity.this.startActivity(intent);
 					// LoginActivity.this.finish( );

@@ -18,6 +18,8 @@ public class MainTabActivity extends TabActivity
 		implements
 			OnCheckedChangeListener {
 	public static Oauth2AccessToken accessToken;
+	public static String userName;
+	public static long userId;
 	private RadioGroup mainTab;
 	private TabHost tabhost;
 	private Intent iHome;
@@ -44,6 +46,8 @@ public class MainTabActivity extends TabActivity
 		Intent intent = MainTabActivity.this.getIntent();
 		accessToken = (Oauth2AccessToken) intent
 				.getSerializableExtra("AccessToken");
+		userName = intent.getStringExtra("username");
+		userId = intent.getLongExtra("user_id", -1);
 		// Add or Update by Lei@2013/05/05 UPD END
 		mainTab = (RadioGroup) findViewById(R.id.main_tab);
 		mainTab.setOnCheckedChangeListener(this);

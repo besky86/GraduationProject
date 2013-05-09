@@ -118,6 +118,7 @@ public class WeiboAdapter extends BaseAdapter {
 
 		Log.v("Image", holder.img_wb_item_head.toString());
 
+		holder.txt_wb_item_uname.getPaint().setFakeBoldText(true); // 设置仿粗体
 		if (s.getUser() == null) {
 			holder.txt_wb_item_uname.setText(s.getUid());
 		}
@@ -134,6 +135,14 @@ public class WeiboAdapter extends BaseAdapter {
 								ImageView imageView) {
 
 							// TODO Auto-generated method stub
+
+							// Delete by Lei@2013/05/09 DEL START
+							// imageView
+							// .setLayoutParams(new LinearLayout.LayoutParams(
+							// drawable.getIntrinsicHeight() / 5,
+							// drawable.getIntrinsicWidth() / 5));
+							// Delete by Lei@2013/05/09 DEL END
+
 							imageView.setImageDrawable(drawable);
 						}
 					});

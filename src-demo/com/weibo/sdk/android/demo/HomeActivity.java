@@ -1,5 +1,6 @@
 package com.weibo.sdk.android.demo;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,30 +12,46 @@ import com.weibo.sdk.android.WeiboException;
 import com.weibo.sdk.android.demo.TestActivity.StatusRequestListener;
 import com.weibo.sdk.android.entity.*;
 import com.weibo.sdk.android.net.RequestListener;
+import com.weibo.sdk.android.requestlisteners.FavoriteRequestListener;
 
 import com.weibo.sdk.android.adapter.*;
+import com.weibo.sdk.android.api.FavoritesAPI;
 import com.weibo.sdk.android.api.StatusesAPI;
 import com.weibo.sdk.android.api.UsersAPI;
 import com.weibo.sdk.android.api.WeiboAPI;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
+@SuppressLint("HandlerLeak")
 public class HomeActivity extends Activity {
 
 	private static final String TAG = "HomeActivity";
 
 	// 加载View
 	// private View progresView;
+
+	UsersAPI userAPI = new UsersAPI(MainTabActivity.accessToken);
+	StatusesAPI statusesAPI = new StatusesAPI(MainTabActivity.accessToken);
 
 	private View titleView;
 	private Button btn_write;
@@ -50,8 +67,7 @@ public class HomeActivity extends Activity {
 			for (Status status : statusList) {
 				Log.v("User", status.getUid());
 				if (status.getUser() == null) {
-					UsersAPI users = new UsersAPI(MainTabActivity.accessToken);
-					users.show(Long.parseLong(status.getUid()),
+					userAPI.show(Long.parseLong(status.getUid()),
 							new UserRequestListener(status));
 				}
 			}
@@ -77,6 +93,10 @@ public class HomeActivity extends Activity {
 		weiboListView = (ListView) findViewById(R.id.lv_weibos);
 		btn_write = (Button) findViewById(R.id.btn_writer);
 		btn_refresh = (Button) findViewById(R.id.btn_refresh);
+		TextView tv = (TextView) findViewById(R.id.tv_username);
+		
+		tv.getPaint().setFakeBoldText(true); //设置仿粗体
+		tv.setText(MainTabActivity.userName);
 
 	}
 
@@ -125,11 +145,9 @@ public class HomeActivity extends Activity {
 	 */
 	private void showStatuses() {
 		if (null != MainTabActivity.accessToken) {
-			// AccountAPI account = new AccountAPI(accessToken);
-			// account.getUid(new UIDRequestListener());
-			StatusesAPI statuses = new StatusesAPI(MainTabActivity.accessToken);
-			statuses.homeTimeline(0l, 0l, 20, 1, false, WeiboAPI.FEATURE.ALL,
-					true, new StatusesRequestListener());
+
+			statusesAPI.homeTimeline(0l, 0l, 20, 1, false,
+					WeiboAPI.FEATURE.ALL, true, new StatusesRequestListener());
 		}
 	}
 
@@ -144,8 +162,8 @@ public class HomeActivity extends Activity {
 		// TODO Auto-generated method stub
 		for (Status status : statuses) {
 			if (status.getUser() == null) {
-				UsersAPI users = new UsersAPI(MainTabActivity.accessToken);
-				users.show(status.getUid(), new UserRequestListener(status));
+
+				userAPI.show(status.getUid(), new UserRequestListener(status));
 			}
 		}
 	}
@@ -157,10 +175,94 @@ public class HomeActivity extends Activity {
 		return true;
 	}
 
-	public void refresh(List<Status> statuses) {
+	public void refresh(final List<Status> statuses) {
 
 		WeiboAdapter adapter = new WeiboAdapter(this, statuses);
 		weiboListView.setAdapter(adapter);
+		weiboListView.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+
+				// TODO Auto-generated method stub
+
+			}
+
+		});
+
+		weiboListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				// TODO Auto-generated method stub
+				final CharSequence[] choices = {"转发", "评论", "收藏", "查看个人资料"};
+				final AlertDialog.Builder builder = new AlertDialog.Builder(
+						HomeActivity.this);
+				final int index = position;
+				builder.setTitle("微博功能")
+
+						// icon
+						.setItems(
+								choices,
+								new android.content.DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+
+										switch (which) {
+											case 0 :
+
+												Intent intent = new Intent(
+														HomeActivity.this,
+														RepostActivity.class);
+												intent.putExtra("status_id",
+														statuses.get(index)
+																.getId());
+												HomeActivity.this
+														.startActivity(intent);
+												break;
+
+											case 1 :
+												Intent intent2comment = new Intent(
+														HomeActivity.this,
+														CommentActivity.class);
+												intent2comment.putExtra(
+														"status_id", statuses
+																.get(index)
+																.getId());
+												HomeActivity.this
+														.startActivity(intent2comment);
+												break;
+											case 2 :
+
+												new FavoritesAPI(
+														MainTabActivity.accessToken)
+														.create(statuses.get(
+																index).getId(),
+																new FavoriteRequestListener(
+																		HomeActivity.this));
+												break;
+
+										}
+
+									}
+								});
+				builder.create().show();
+				return false;
+
+			}
+
+		});
 
 		Log.i(TAG, "ok--------");
 	}
@@ -188,17 +290,6 @@ public class HomeActivity extends Activity {
 				e.printStackTrace();
 
 			}
-			// Delete by Lei@2013/05/06 DEL START
-			// Message message = new Message();
-			// Bundle bundle = new Bundle();
-			// bundle.putString("response", response);
-			// bundle.putSerializable("status", status);
-			// message.setData(bundle);
-			// Log.v(TAG, response);
-			// message.what = 2;
-			// HomeActivity.this.h.sendMessage(message);
-			// Delete by Lei@2013/05/06 DEL END
-			// testView.setText(response);
 
 		}
 
@@ -222,7 +313,6 @@ public class HomeActivity extends Activity {
 		@Override
 		public void onComplete(String response) {
 			// TODO Auto-generated method stub
-
 			Log.v(TAG, response);
 			Message message = new Message();
 			Bundle bundle = new Bundle();

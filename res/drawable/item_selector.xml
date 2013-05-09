@@ -3,7 +3,7 @@
 
     <item android:drawable="@drawable/listitem_bg_n" android:state_enabled="true" android:state_focused="true" android:state_pressed="false"/>
     <item android:drawable="@drawable/listitem_bg_n" android:state_enabled="true" android:state_pressed="true"/>
-    <item android:drawable="@drawable/bg_h" android:state_checked="true" android:state_enabled="true"/>
+    <item android:drawable="@drawable/turn_bg_n" android:state_checked="true" android:state_enabled="true"/>
     <item android:drawable="@drawable/transparent"/>
 
 </selector>

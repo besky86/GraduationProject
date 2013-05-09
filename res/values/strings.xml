@@ -54,5 +54,13 @@
     <string name="write_text">发表新微博</string>
     <string name="write_hint">说点什么吧。。。。。。</string>
     <string name="max_num">140</string>
+    <string name="title_activity_repost">RepostActivity</string>
+    <string name="addcomment2repost">同时作为评论发布</string>
+    <string name="repost_title">转发微博</string>
+    <string name="title_activity_comment">CommentActivity</string>
+    <string name="comment_title">评论微博</string>
+    <string name="addstatus2comment">同时发一条微博</string>
+    <string name="title_activity_person_data">PersonDataActivity</string>
+    <string name="title_activity_status_detail">StatusDetailActivity</string>
 
 </resources>

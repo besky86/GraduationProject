@@ -65,6 +65,7 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 	private ArrayList<CharSequence> friendsSNameList = new ArrayList<CharSequence>();
 	private ArrayList<String> topicList = new ArrayList<String>();
 	CharSequence[] friendsItems;
+	private Button btn_back;
 
 	private String picPath;// 文件路径
 	private static final int PHOTO_WITH_CAMERA = 1010;// 拍摄照片
@@ -92,7 +93,7 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 				index++;
 			}
 
-			// addListeners();
+			addListeners();
 
 			// getUsers(statusList);
 
@@ -106,21 +107,8 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 		getViews();
 
 		addListeners();
+		
 
-		// Delete by Lei@2013/05/07 DEL START
-		// new Thread(){
-		// boolean hasData = false;
-		// public void run( ){
-		// while(!hasData){
-		//
-		// if(friendsItems.length > 0){
-		// hasData = true;
-		// addListeners( );
-		// }
-		// }
-		// }
-		// };
-		// Delete by Lei@2013/05/07 DEL END
 
 	}
 
@@ -133,6 +121,7 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 		et_content = (EditText) findViewById(R.id.et_content);
 		btn_insert_at = (ImageButton) findViewById(R.id.btn_tool_at);
 		btn_insert_topic = (ImageButton) findViewById(R.id.btn_tool_topic);
+		btn_back = (Button) findViewById(R.id.btn_back);
 		FriendshipsAPI friendShipAPI = new FriendshipsAPI(
 				MainTabActivity.accessToken);
 		friendShipAPI.friends(
@@ -141,6 +130,19 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 
 	}
 	private void addListeners() {
+		
+		btn_back.setOnClickListener(new OnClickListener( ){
+
+			@Override
+			public void onClick(View v) {
+				
+				// TODO Auto-generated method stub
+				WriteWeiboActivity.this.finish();
+			}
+			
+		});
+		
+		
 		btn_send.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -518,7 +520,7 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 					System.out.println(picPath);
 					file = new File(picPath);
 					pic = decodeFile(file);
-				//	WriteWeiboActivity.this.filePic =file;
+					// WriteWeiboActivity.this.filePic =file;
 					inserted_iv.setImageBitmap(pic);
 					System.out.println("++++++相机+++++");
 					break;
@@ -531,7 +533,7 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 						System.out.println(picPath);
 						file = new File(picPath);
 						pic = decodeFile(file);
-					//	WriteWeiboActivity.this.filePic = file;
+						// WriteWeiboActivity.this.filePic = file;
 						inserted_iv.setImageBitmap(pic);
 					}
 					else
@@ -541,14 +543,14 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 							cursor.moveToFirst();
 							picPath = cursor.getString(1);
 							file = new File(picPath);
-						//	WriteWeiboActivity.this.filePic= file;
+							// WriteWeiboActivity.this.filePic= file;
 							pic = decodeFile(file);
 							inserted_iv.setImageBitmap(pic);
 
 						}
 					break;
 			}
-			
+
 			inserted_iv.setVisibility(View.VISIBLE);
 			WriteWeiboActivity.this.filePic = file;
 

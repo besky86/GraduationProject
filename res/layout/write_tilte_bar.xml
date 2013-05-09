@@ -6,7 +6,7 @@
     android:paddingRight="5dp" >
 
     <LinearLayout
-        android:id="@+id/write_locate_layout"
+        android:id="@+id/write_back_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
@@ -14,7 +14,7 @@
         android:layout_marginLeft="10dp" >
 
         <Button
-            android:id="@+id/back"
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
