@@ -213,17 +213,18 @@ public final class R {
         public static final int activity_test=0x7f03000c;
         public static final int activity_write_weibo=0x7f03000d;
         public static final int comment_tilte_bar=0x7f03000e;
-        public static final int logo=0x7f03000f;
-        public static final int oauth=0x7f030010;
-        public static final int oauth_dialog=0x7f030011;
-        public static final int repost_tilte_bar=0x7f030012;
-        public static final int tilte_bar=0x7f030013;
-        public static final int user_add_list_item=0x7f030014;
-        public static final int user_drop_list_item=0x7f030015;
-        public static final int user_select_dialog=0x7f030016;
-        public static final int wb_item_template=0x7f030017;
-        public static final int write_bottom_title_bar=0x7f030018;
-        public static final int write_tilte_bar=0x7f030019;
+        public static final int footerview=0x7f03000f;
+        public static final int logo=0x7f030010;
+        public static final int oauth=0x7f030011;
+        public static final int oauth_dialog=0x7f030012;
+        public static final int repost_tilte_bar=0x7f030013;
+        public static final int tilte_bar=0x7f030014;
+        public static final int user_add_list_item=0x7f030015;
+        public static final int user_drop_list_item=0x7f030016;
+        public static final int user_select_dialog=0x7f030017;
+        public static final int wb_item_template=0x7f030018;
+        public static final int write_bottom_title_bar=0x7f030019;
+        public static final int write_tilte_bar=0x7f03001a;
     }
     public static final class menu {
         public static final int activity_main=0x7f090000;

@@ -3,6 +3,7 @@ package com.weibo.sdk.android.entity;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -19,7 +20,7 @@ import com.weibo.sdk.android.demo.TestActivity;
 import com.weibo.sdk.android.net.RequestListener;
 import com.weibo.sdk.android.util.StringUtil;
 
-public class Status implements Serializable {
+public class Status implements Serializable, Comparable {
 
 	/**
 	 * serialVersionUID:TODO
@@ -111,15 +112,19 @@ public class Status implements Serializable {
 	public static List<Status> getStatusesList(String statusesJSON) {
 		Log.v(TAG, "getStatusedList start");
 		JSONArray jsonArray;
+		// ArrayList<Status> list1 = new ArrayList<Status>();
 		ArrayList<Status> list = new ArrayList<Status>();
+
 		try {
 			jsonArray = new JSONObject(statusesJSON).getJSONArray("statuses");
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jsonObject = (JSONObject) jsonArray.opt(i);
-				Status status = Status.getStatusByJSON(jsonObject);
+				if (jsonObject != null) {
+					Status status = Status.getStatusByJSON(jsonObject);
 
-				list.add(status);
+					list.add(status);
+				}
 				Log.v(TAG, jsonObject.toString());
 			}
 
@@ -151,76 +156,79 @@ public class Status implements Serializable {
 		 * 获取相应字段
 		 */
 
-		try {
-			String created_at = jsonObject.getString("created_at");
-			// 创建时间
-			long id = jsonObject.getLong("id"); // 微博ID
-			long mid = jsonObject.getLong("mid"); // 微博MID
-			String idstr = jsonObject.getString("idstr");// 字符串型的微博ID
-			String text = jsonObject.getString("text");// 微博信息内容
-			String source = jsonObject.getString("source");// 微博来源
-			boolean favorited = jsonObject.getBoolean("favorited");// 是否已收藏
-			boolean truncated = jsonObject.getBoolean("truncated");
+		if (jsonObject != null) {
+			try {
+				String created_at = jsonObject.getString("created_at");
+				// 创建时间
+				long id = jsonObject.getLong("id"); // 微博ID
+				long mid = jsonObject.getLong("mid"); // 微博MID
+				String idstr = jsonObject.getString("idstr");// 字符串型的微博ID
+				String text = jsonObject.getString("text");// 微博信息内容
+				String source = jsonObject.getString("source");// 微博来源
+				boolean favorited = jsonObject.getBoolean("favorited");// 是否已收藏
+				boolean truncated = jsonObject.getBoolean("truncated");
 
-			if (jsonObject.has("thumbnail_pic")) {
+				if (jsonObject.has("thumbnail_pic")) {
 
-				status.setThumbnail_pic(jsonObject.getString("thumbnail_pic"));
+					status.setThumbnail_pic(jsonObject
+							.getString("thumbnail_pic"));
+				}
+				if (jsonObject.has("bmiddle_pic")) {
+					status.setBmiddle_pic(jsonObject.getString("bmiddle_pic"));
+				}
+				if (jsonObject.has("original_pic")) {
+					status.setBmiddle_pic(jsonObject.getString("original_pic"));
+				}
+
+				// Delete by Lei@2013/04/29 DEL START
+				// if (!jsonObject.isNull("geo")) {
+				// status.setGeo(Geo.getGeoByJSON(jsonObject.getJSONObject("geo")));
+				// }
+				// Delete by Lei@2013/04/29 DEL END
+				if (!jsonObject.isNull("user")) {
+					status.setUser(User.getUserByJSON(jsonObject
+							.getJSONObject("user")));
+				}
+				if (!jsonObject.isNull("uid")) {
+					status.setUid(jsonObject.getString("uid"));
+
+				}
+
+				if (jsonObject.has("retweeted_status")) {
+					Status retweeted_status = Status.getStatusByJSON(jsonObject
+							.getJSONObject("retweeted_status"));
+					status.setRetweeted_status(retweeted_status);
+				}
+
+				int reposts_count = jsonObject.getInt("reposts_count");
+				int comments_count = jsonObject.getInt("comments_count");
+				int attitudes_count = jsonObject.getInt("attitudes_count");
+
+				JSONObject visi = jsonObject.getJSONObject("visible");
+				Visible visible = new Visible();
+				visible.setList_id(visi.getInt("list_id"));
+				visible.setType(visi.getInt("type"));
+
+				status.setCreated_at(created_at);
+				status.setId(id);
+				status.setMid(mid);
+				status.setIdstr(idstr);
+				status.setText(text);
+				status.setSource(source);
+				status.setFavorited(favorited);
+				status.setTruncated(truncated);
+
+				status.setReposts_count(reposts_count);
+				status.setComments_count(comments_count);
+				status.setAttitudes_count(attitudes_count);
+				status.setVisible(visible);
+
 			}
-			if (jsonObject.has("bmiddle_pic")) {
-				status.setBmiddle_pic(jsonObject.getString("bmiddle_pic"));
+			catch (JSONException e) {
+				// TODO Auto-generated catch block
+				Log.v(TAG, "JSON Exception");
+				e.printStackTrace();
 			}
-			if (jsonObject.has("original_pic")) {
-				status.setBmiddle_pic(jsonObject.getString("original_pic"));
-			}
-
-			// Delete by Lei@2013/04/29 DEL START
-			// if (!jsonObject.isNull("geo")) {
-			// status.setGeo(Geo.getGeoByJSON(jsonObject.getJSONObject("geo")));
-			// }
-			// Delete by Lei@2013/04/29 DEL END
-			if (!jsonObject.isNull("user")) {
-				status.setUser(User.getUserByJSON(jsonObject
-						.getJSONObject("user")));
-			}
-			if (!jsonObject.isNull("uid")) {
-				status.setUid(jsonObject.getString("uid"));
-
-			}
-
-			if (jsonObject.has("retweeted_status")) {
-				Status retweeted_status = Status.getStatusByJSON(jsonObject
-						.getJSONObject("retweeted_status"));
-				status.setRetweeted_status(retweeted_status);
-			}
-
-			int reposts_count = jsonObject.getInt("reposts_count");
-			int comments_count = jsonObject.getInt("comments_count");
-			int attitudes_count = jsonObject.getInt("attitudes_count");
-
-			JSONObject visi = jsonObject.getJSONObject("visible");
-			Visible visible = new Visible();
-			visible.setList_id(visi.getInt("list_id"));
-			visible.setType(visi.getInt("type"));
-
-			status.setCreated_at(created_at);
-			status.setId(id);
-			status.setMid(mid);
-			status.setIdstr(idstr);
-			status.setText(text);
-			status.setSource(source);
-			status.setFavorited(favorited);
-			status.setTruncated(truncated);
-
-			status.setReposts_count(reposts_count);
-			status.setComments_count(comments_count);
-			status.setAttitudes_count(attitudes_count);
-			status.setVisible(visible);
-
-		}
-		catch (JSONException e) {
-			// TODO Auto-generated catch block
-			Log.v(TAG, "JSON Exception");
-			e.printStackTrace();
 		}
 		Log.v(TAG, "getStatusByJSON end");
 		return status;
@@ -452,6 +460,30 @@ public class Status implements Serializable {
 		this.visible = visible;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(Object another) {
+
+		// TODO Auto-generated method stub
+		if (!(another instanceof Status) || another == null) {
+			return -2;
+		}
+		Status status = (Status) another;
+		if (this.id > status.getId()) {
+			return -1;
+		}
+		else
+			if (this.id == status.getId()) {
+				return 0;
+			}
+			else
+				return 1;
+
+	}
 }
 
 class Visible {

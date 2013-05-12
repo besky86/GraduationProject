@@ -147,6 +147,7 @@ public class LoginActivity extends Activity {
 		users.remove(user);
 		users.add(0, user);
 
+		Log.v("user",user.getUserName());
 		UserInfoListAdapter adapter = new UserInfoListAdapter(this, users);
 		spinner.setAdapter(adapter);
 

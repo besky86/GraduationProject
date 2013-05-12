@@ -34,7 +34,7 @@ import android.widget.TextView;
  */
 public class WeiboAdapter extends BaseAdapter {
 
-	private List<Status> status;
+	public List<Status> status;
 
 	private Context context;
 
@@ -214,8 +214,9 @@ public class WeiboAdapter extends BaseAdapter {
 
 			holder.txt_wb_item_subcontent = (TextView) view
 					.findViewById(R.id.txt_wb_item_subcontent);
-			holder.txt_wb_item_subcontent.setText(StringUtil
-					.getSpannableString(s.getRetweeted_status().getText()));
+			if (s.getRetweeted_status().getText() != null)
+				holder.txt_wb_item_subcontent.setText(StringUtil
+						.getSpannableString(s.getRetweeted_status().getText()));
 
 			// 判断微博中是否含有图片
 			if (!StringUtil.isEmpty(s.getRetweeted_status().getThumbnail_pic())) {

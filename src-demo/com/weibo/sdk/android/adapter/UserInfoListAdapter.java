@@ -17,6 +17,7 @@
 package com.weibo.sdk.android.adapter;
 
 import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.weibo.sdk.android.demo.LoginActivity;
