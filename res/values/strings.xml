@@ -62,5 +62,6 @@
     <string name="addstatus2comment">同时发一条微博</string>
     <string name="title_activity_person_data">PersonDataActivity</string>
     <string name="title_activity_status_detail">StatusDetailActivity</string>
+    <string name="title_activity_detail">DetailActivity</string>
 
 </resources>

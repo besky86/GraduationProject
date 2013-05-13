@@ -92,6 +92,10 @@
             android:name="com.weibo.sdk.android.demo.StatusDetailActivity"
             android:label="@string/title_activity_status_detail" >
         </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.DetailActivity"
+            android:label="@string/title_activity_detail" >
+        </activity>
     </application>
 
 </manifest>

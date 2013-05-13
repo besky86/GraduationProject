@@ -76,14 +76,19 @@ public class HomeActivity extends Activity implements OnScrollListener {
 			List<Status> statusList = Status.getStatusesList((msg.getData()
 					.getString("response")));
 
+			if (statusList.size() == 0)
+				return;
 			// Collections.sort(statusList);
 
 			if (adapter.getCount() == 0) {
 				adapter.status = statusList;
 
 				statuses = statusList;
+
 				for (Status status : statusList) {
-					Log.v("User", status.getUid());
+					// Log.v("User", status.getUid());
+					if (status == null)
+						continue;
 					if (status.getUser() == null) {
 						userAPI.show(Long.parseLong(status.getUid()),
 								new UserRequestListener(status));
@@ -93,22 +98,26 @@ public class HomeActivity extends Activity implements OnScrollListener {
 			else {
 				long firstId = adapter.status.get(0).getId();
 				for (Status status : statusList) {
+					if (status == null)
+						continue;
 
-					Log.v("User", status.getUid());
-					if (status.getId() <= firstId || status == null)
-						break;
+					// Log.v("User", status.getUid());
+					// if (status.getId() <= firstId || status == null)
+					// continue;
 
 					if (status.getId() > firstId) {
 						Log.v("Status", status.toString());
 						adapter.status.add(0, status);
 						statusList.add(0, status);
 					}
-					else
-						if (status.getId() < statuses.get(statuses.size())
+					else {
+						Log.v("More", status.getIdstr());
+						if (status.getId() < statuses.get(statuses.size() - 1)
 								.getId()) {
-							statusList.add(status);
+							statuses.add(status);
 							adapter.status.add(status);
 						}
+					}
 					if (status.getUser() == null) {
 						userAPI.show(Long.parseLong(status.getUid()),
 								new UserRequestListener(status));
@@ -180,10 +189,11 @@ public class HomeActivity extends Activity implements OnScrollListener {
 			public void onClick(View v) {
 
 				// TODO Auto-generated method stub
-				
+				Log.v("More", "begin");
+
 				statusesAPI.homeTimeline(0l,
-						adapter.status.get(adapter.getCount()).getId(), 20, 1,
-						false, WeiboAPI.FEATURE.ALL, true,
+						adapter.status.get(adapter.getCount() - 1).getId() - 1,
+						20, 1, false, WeiboAPI.FEATURE.ALL, false,
 						new StatusesRequestListener());
 
 			}
@@ -382,12 +392,13 @@ public class HomeActivity extends Activity implements OnScrollListener {
 
 			if (statuses.size() > 0) {
 				statusesAPI.homeTimeline(statuses.get(0).getId(), 0l, 20, 1,
-						false, WeiboAPI.FEATURE.ALL, true,
+						false, WeiboAPI.FEATURE.ALL, false,
 						new StatusesRequestListener());
 			}
 			else
+
 				statusesAPI.homeTimeline(0l, 0l, 20, 1, false,
-						WeiboAPI.FEATURE.ALL, true,
+						WeiboAPI.FEATURE.ALL, false,
 						new StatusesRequestListener());
 		}
 	}

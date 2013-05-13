@@ -98,8 +98,10 @@ public class MainTabActivity extends TabActivity
 				// Delete by Lei@2013/04/28 DEL START
 				// tabhost.setCurrentTab(checkedId);
 				// Delete by Lei@2013/04/28 DEL END
-				Toast.makeText(MainTabActivity.this, "button0",
-						Toast.LENGTH_SHORT).show();
+				//Delete by Lei@2013/05/13 DEL START
+				//Toast.makeText(MainTabActivity.this, "button0",
+				//		Toast.LENGTH_SHORT).show();
+				//Delete by Lei@2013/05/13 DEL END
 
 				break;
 			case R.id.radio_news :
@@ -107,32 +109,40 @@ public class MainTabActivity extends TabActivity
 				// Delete by Lei@2013/04/28 DEL START
 				// tabhost.setCurrentTab(1);
 				// Delete by Lei@2013/04/28 DEL END
-				Toast.makeText(MainTabActivity.this, "button1",
-						Toast.LENGTH_SHORT).show();
+				//Delete by Lei@2013/05/13 DEL START
+				//Toast.makeText(MainTabActivity.this, "button1",
+				//		Toast.LENGTH_SHORT).show();
+				//Delete by Lei@2013/05/13 DEL END
 				break;
 			case R.id.radio_info :
 				tabhost.setCurrentTabByTag(INFO_TAB);
 				// Delete by Lei@2013/04/28 DEL START
 				// tabhost.setCurrentTab(2);
 				// Delete by Lei@2013/04/28 DEL END
-				Toast.makeText(MainTabActivity.this, "button2",
-						Toast.LENGTH_SHORT).show();
+				//Delete by Lei@2013/05/13 DEL START
+				//Toast.makeText(MainTabActivity.this, "button2",
+				//		Toast.LENGTH_SHORT).show();
+				//Delete by Lei@2013/05/13 DEL END
 				break;
 			case R.id.radio_search :
 				tabhost.setCurrentTabByTag(SEARCH_TAB);
 				// Delete by Lei@2013/04/28 DEL START
 				// tabhost.setCurrentTab(3);
 				// Delete by Lei@2013/04/28 DEL END
-				Toast.makeText(MainTabActivity.this, "button3",
-						Toast.LENGTH_SHORT).show();
+				//Delete by Lei@2013/05/13 DEL START
+				//Toast.makeText(MainTabActivity.this, "button3",
+				//		Toast.LENGTH_SHORT).show();
+				//Delete by Lei@2013/05/13 DEL END
 				break;
 			case R.id.radio_more :
 				tabhost.setCurrentTabByTag(MORE_TAB);
 				// Delete by Lei@2013/04/28 DEL START
 				// tabhost.setCurrentTab(4);
 				// Delete by Lei@2013/04/28 DEL END
-				Toast.makeText(MainTabActivity.this, "button4",
-						Toast.LENGTH_SHORT).show();
+				//Delete by Lei@2013/05/13 DEL START
+				//Toast.makeText(MainTabActivity.this, "button4",
+				//		Toast.LENGTH_SHORT).show();
+				//Delete by Lei@2013/05/13 DEL END
 				break;
 		}
 	}
