@@ -146,9 +146,10 @@ public class Comment {
 		try {
 			comment.setId(object.getLong("id"));
 
+			comment.setCreated_at(object.getString("created_at"));
 			comment.setText(object.getString("text"));
 			comment.setSource(object.getString("source"));
-			comment.setUser(User.getUserByJSON(object.getJSONObject("User")));
+			comment.setUser(User.getUserByJSON(object.getJSONObject("user")));
 			comment.setMid(object.getString("mid"));
 			comment.setIdstr(object.getString("idstr"));
 			comment.setStatus(Status.getStatusByJSON(object

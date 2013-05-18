@@ -71,29 +71,20 @@ public class HomeActivity extends Activity implements OnScrollListener {
 	private ListView weiboListView;
 
 	Handler h = new Handler() {
-
 		public void handleMessage(Message msg) {
 			List<Status> statusList = Status.getStatusesList((msg.getData()
 					.getString("response")));
 
-			if (statusList.size() == 0)
+			if (statusList.size() == 0) {
+				Util.showToast(HomeActivity.this, "无新的数据");
 				return;
+			}
 			// Collections.sort(statusList);
-
 			if (adapter.getCount() == 0) {
 				adapter.status = statusList;
 
 				statuses = statusList;
 
-				for (Status status : statusList) {
-					// Log.v("User", status.getUid());
-					if (status == null)
-						continue;
-					if (status.getUser() == null) {
-						userAPI.show(Long.parseLong(status.getUid()),
-								new UserRequestListener(status));
-					}
-				}
 			}
 			else {
 				long firstId = adapter.status.get(0).getId();
@@ -101,43 +92,27 @@ public class HomeActivity extends Activity implements OnScrollListener {
 					if (status == null)
 						continue;
 
-					// Log.v("User", status.getUid());
-					// if (status.getId() <= firstId || status == null)
-					// continue;
-
 					if (status.getId() > firstId) {
 						Log.v("Status", status.toString());
 						adapter.status.add(0, status);
-						statusList.add(0, status);
 					}
-					else {
-						Log.v("More", status.getIdstr());
-						if (status.getId() < statuses.get(statuses.size() - 1)
-								.getId()) {
-							statuses.add(status);
-							adapter.status.add(status);
+					else
+						if (status.getId() < firstId) {
+							Log.v("More", status.getIdstr());
+							if (status.getId() < statuses.get(
+									statuses.size() - 1).getId()) {
+								// statuses.add(status);
+								adapter.status.add(status);
+							}
 						}
-					}
 					if (status.getUser() == null) {
 						userAPI.show(Long.parseLong(status.getUid()),
 								new UserRequestListener(status));
 					}
-
 				}
-
 			}
 			adapter.notifyDataSetChanged();
-
-			/**
-			 * for (Status status : statusList) { Log.v("User",
-			 * status.getUid());
-			 * 
-			 * if (status.getUser() == null) {
-			 * userAPI.show(Long.parseLong(status.getUid()), new
-			 * UserRequestListener(status)); } }
-			 */
-			// getUsers(statusList);
-			// refresh();
+			Util.showToast(HomeActivity.this, "更新完成");
 			Log.v(TAG, msg.getData().getString("response"));
 
 		}
@@ -154,6 +129,14 @@ public class HomeActivity extends Activity implements OnScrollListener {
 		getViews();
 		addListeners();
 		showStatuses();
+
+	}
+
+	@Override
+	protected void onPause() {
+
+		// TODO Auto-generated method stub
+		super.onPause();
 
 	}
 
@@ -191,6 +174,8 @@ public class HomeActivity extends Activity implements OnScrollListener {
 				// TODO Auto-generated method stub
 				Log.v("More", "begin");
 
+				if (adapter.getCount() == 0)
+					return;
 				statusesAPI.homeTimeline(0l,
 						adapter.status.get(adapter.getCount() - 1).getId() - 1,
 						20, 1, false, WeiboAPI.FEATURE.ALL, false,
@@ -229,90 +214,26 @@ public class HomeActivity extends Activity implements OnScrollListener {
 
 		});
 
-		weiboListView.setOnItemSelectedListener(new OnItemSelectedListener() {
+		weiboListView
+				.setOnItemClickListener(new ListView.OnItemClickListener() {
 
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
 
-				// TODO Auto-generated method stub
+						// TODO Auto-generated method stub
+						Log.v("listm", "begin");
 
-			}
+						Intent intent = new Intent(HomeActivity.this,
+								DetailActivity.class);
 
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
+						intent.putExtra("status", statuses.get(position));
+						// intent.putExtra(name, value)
+						HomeActivity.this.startActivity(intent);
 
-				// TODO Auto-generated method stub
+					}
 
-			}
-
-		});
-
-		weiboListView.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-
-				// TODO Auto-generated method stub
-				final CharSequence[] choices = {"转发", "评论", "收藏", "查看个人资料"};
-				final AlertDialog.Builder builder = new AlertDialog.Builder(
-						HomeActivity.this);
-				final int index = position;
-				builder.setTitle("微博功能")
-
-						// icon
-						.setItems(
-								choices,
-								new android.content.DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-
-										switch (which) {
-											case 0 :
-
-												Intent intent = new Intent(
-														HomeActivity.this,
-														RepostActivity.class);
-												intent.putExtra("status_id",
-														statuses.get(index)
-																.getId());
-												HomeActivity.this
-														.startActivity(intent);
-												break;
-
-											case 1 :
-												Intent intent2comment = new Intent(
-														HomeActivity.this,
-														CommentActivity.class);
-												intent2comment.putExtra(
-														"status_id", statuses
-																.get(index)
-																.getId());
-												HomeActivity.this
-														.startActivity(intent2comment);
-												break;
-											case 2 :
-
-												new FavoritesAPI(
-														MainTabActivity.accessToken)
-														.create(statuses.get(
-																index).getId(),
-																new FavoriteRequestListener(
-																		HomeActivity.this));
-												break;
-
-										}
-
-									}
-								});
-				builder.create().show();
-				return false;
-
-			}
-
-		});
+				});
 
 		weiboListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
@@ -366,7 +287,8 @@ public class HomeActivity extends Activity implements OnScrollListener {
 														.create(statuses.get(
 																index).getId(),
 																new FavoriteRequestListener(
-																		HomeActivity.this));
+																		HomeActivity.this,
+																		"收藏"));
 												break;
 
 										}
@@ -484,7 +406,8 @@ public class HomeActivity extends Activity implements OnScrollListener {
 														.create(statuses.get(
 																index).getId(),
 																new FavoriteRequestListener(
-																		HomeActivity.this));
+																		HomeActivity.this,
+																		"收藏"));
 												break;
 
 										}
@@ -573,12 +496,7 @@ public class HomeActivity extends Activity implements OnScrollListener {
 		}
 
 	}
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.AbsListView.OnScrollListener#onScroll(android.widget.
-	 * AbsListView, int, int, int)
-	 */
+
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
@@ -587,20 +505,8 @@ public class HomeActivity extends Activity implements OnScrollListener {
 		this.visibleItemCount = visibleItemCount;
 		visibleLastIndex = firstVisibleItem + visibleItemCount - 1;
 
-		// if (totalItemCount == statuses.size() + 1) {
-		// weiboListView.removeFooterView(moreView);
-		// }
-		// Toast.makeText(this, "数据全部加载完!", Toast.LENGTH_LONG).show();
-
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * android.widget.AbsListView.OnScrollListener#onScrollStateChanged(android
-	 * .widget.AbsListView, int)
-	 */
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 

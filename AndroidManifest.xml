@@ -96,6 +96,26 @@
             android:name="com.weibo.sdk.android.demo.DetailActivity"
             android:label="@string/title_activity_detail" >
         </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.CommentListActivity"
+            android:label="@string/title_activity_comment_list" >
+        </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.UserInfoActivity"
+            android:label="@string/title_activity_user_info" >
+        </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.FollowingActivity"
+            android:label="@string/title_activity_following" >
+        </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.FollowerListActivity"
+            android:label="@string/title_activity_follower_list" >
+        </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.UserWeiboActivity"
+            android:label="@string/title_activity_user_weibo" >
+        </activity>
     </application>
 
 </manifest>

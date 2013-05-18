@@ -10,8 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp" >
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp" >
 
         <Button
             android:id="@+id/btn_back"
@@ -41,9 +41,10 @@
 
     <Button
         android:id="@+id/btn_send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
         android:layout_gravity="right"
+        android:layout_marginTop="5dp"
         android:background="@drawable/btn_send_weibo_selector"
         android:text="@string/weibosdk_send" />
 

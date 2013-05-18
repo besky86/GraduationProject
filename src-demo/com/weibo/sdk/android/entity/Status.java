@@ -233,6 +233,9 @@ public class Status implements Serializable, Comparable {
 		Log.v(TAG, "getStatusByJSON end");
 		return status;
 	}
+	
+	
+	
 	public Status(String created_at, long id, long mid, String idstr,
 			String text, String source, boolean favorited, boolean truncated,
 			String in_reply_to_status_id, String in_reply_to_user_id,
@@ -486,7 +489,14 @@ public class Status implements Serializable, Comparable {
 	}
 }
 
-class Visible {
+class Visible implements Serializable {
+	/**
+	 * serialVersionUID:TODO
+	 * 
+	 * @since 1.0.0
+	 */
+
+	private static final long serialVersionUID = 7231885689495479386L;
 	int type; // type取值，0：普通微博，1：私密微博，3：指定分组微博，4：密友微博
 	int list_id; // 分组的组号
 

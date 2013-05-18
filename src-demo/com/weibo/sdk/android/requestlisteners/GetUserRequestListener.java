@@ -23,7 +23,8 @@ package com.weibo.sdk.android.requestlisteners;
 import java.io.IOException;
 
 import android.app.Activity;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
 
 import com.weibo.sdk.android.demo.*;
 import com.weibo.sdk.android.WeiboException;
@@ -45,16 +46,17 @@ import com.weibo.sdk.android.net.RequestListener;
  * @version 1.0.0
  * 
  */
-public class NullRequestListener implements RequestListener {
+public class GetUserRequestListener implements RequestListener {
 
 	Activity activity;
+	Handler h;
 
 	/**
 	 * 
 	 * 创建一个新的实例 CommentRequestListener.
 	 * 
 	 */
-	public NullRequestListener() {
+	public GetUserRequestListener() {
 
 		super();
 		// TODO Auto-generated constructor stub
@@ -66,19 +68,18 @@ public class NullRequestListener implements RequestListener {
 	 * 
 	 * @param activity
 	 */
-	public NullRequestListener(Activity activity) {
+	public GetUserRequestListener(Activity activity, Handler h) {
 		super();
 		this.activity = activity;
+		this.h = h;
 	}
 	@Override
 	public void onComplete(String response) {
 
-		// TODO Auto-generated method stub
-		// Delete by Lei@2013/05/09 DEL START
-		// Util.showToast(activity, "评论成功");
-		// Delete by Lei@2013/05/09 DEL END
-		Log.e("error", response);
-		
+		Message msg = new Message();
+		msg.getData().putString("user", response);
+		h.handleMessage(msg);
+
 	}
 	@Override
 	public void onIOException(IOException e) {
@@ -92,8 +93,7 @@ public class NullRequestListener implements RequestListener {
 	public void onError(WeiboException e) {
 
 		// TODO Auto-generated method stub
-		Log.e("error", e.getMessage());
-		// Util.showToast(activity, "操作失败");
+		Util.showToast(activity, "操作失败");
 
 	}
 

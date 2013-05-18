@@ -30,6 +30,7 @@ public class FriendshipsAPI extends WeiboAPI {
 		params.add("uid", uid);
 		params.add("count", count);
 		params.add("cursor", cursor);
+		
 		if (trim_status) {
 			params.add("trim_status", 1);
 		} else {
@@ -170,9 +171,9 @@ public class FriendshipsAPI extends WeiboAPI {
 		params.add("count", count);
 		params.add("cursor", cursor);
 		if (trim_status) {
-			params.add("trim_status", 0);
-		} else {
 			params.add("trim_status", 1);
+		} else {
+			params.add("trim_status", 0);
 		}
 		request( SERVER_URL_PRIX + "/followers.json", params, HTTPMETHOD_GET, listener);
 	}
@@ -332,7 +333,7 @@ public class FriendshipsAPI extends WeiboAPI {
 		WeiboParameters params = new WeiboParameters();
 		params.add("uid", uid);
 		params.add("screen_name", screen_name);
-		request( SERVER_URL_PRIX + "/create.json", params, HTTPMETHOD_POST, listener);
+		super.request( SERVER_URL_PRIX + "/create.json", params, HTTPMETHOD_POST, listener);
 	}
 
 	/**

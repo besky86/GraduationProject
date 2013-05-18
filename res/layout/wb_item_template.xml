@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
     android:background="@drawable/item_selector" >
 
     <ImageView
@@ -90,7 +91,7 @@
                 android:layout_marginTop="3dp"
                 android:minHeight="40dp"
                 android:minWidth="40dp"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 android:src="@drawable/detail_pic_loading"
                 android:visibility="gone" />
         </LinearLayout>
@@ -124,7 +125,7 @@
                 android:layout_marginTop="3dp"
                 android:minHeight="40dp"
                 android:minWidth="40dp"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 android:src="@drawable/detail_pic_loading"
                 android:visibility="gone" />
         </LinearLayout>

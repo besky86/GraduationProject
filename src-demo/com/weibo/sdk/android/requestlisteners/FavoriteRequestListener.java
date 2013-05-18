@@ -47,6 +47,7 @@ import com.weibo.sdk.android.net.RequestListener;
 public class FavoriteRequestListener implements RequestListener {
 
 	Activity activity;
+	String info;
 
 	/**
 	 * 创建一个新的实例 FavoriteRequestListener.
@@ -63,21 +64,22 @@ public class FavoriteRequestListener implements RequestListener {
 	 * 
 	 * @param activity
 	 */
-	public FavoriteRequestListener(Activity activity) {
+	public FavoriteRequestListener(Activity activity, String info) {
 		super();
 		this.activity = activity;
+		this.info = info;
 	}
 	@Override
 	public void onComplete(String response) {
 
 		// TODO Auto-generated method stub
-		Util.showToast(activity, "收藏成功");
+		Util.showToast(activity, info + "成功");
 	}
 	@Override
 	public void onIOException(IOException e) {
 
 		// TODO Auto-generated method stub
-		Util.showToast(activity, "收藏异常");
+		Util.showToast(activity, "异常");
 
 	}
 
@@ -85,7 +87,7 @@ public class FavoriteRequestListener implements RequestListener {
 	public void onError(WeiboException e) {
 
 		// TODO Auto-generated method stub
-		Util.showToast(activity, "收藏失败");
+		Util.showToast(activity, "失败");
 
 	}
 

@@ -67,15 +67,7 @@ public class WeiboAdapter extends BaseAdapter {
 
 	private View createViewFromResource(int position, View convertView) {
 		View v;
-		// if (convertView == null) {
 		v = mInflater.inflate(R.layout.wb_item_template, null);
-		// v =
-		// LayoutInflater.from(context).inflate(R.layout.wb_item_template,
-		// null);
-		// }
-		// else {
-		// v = convertView;
-		// }
 
 		bindView(position, v);
 

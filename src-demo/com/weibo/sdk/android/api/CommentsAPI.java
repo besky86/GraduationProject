@@ -34,7 +34,7 @@ public class CommentsAPI extends WeiboAPI {
 		params.add("count", count);
 		params.add("page", page);
 		params.add("filter_by_author", filter_by_author.ordinal());
-		request( SERVER_URL_PRIX + "/show.json", params, HTTPMETHOD_GET,listener);
+		super.request( SERVER_URL_PRIX + "/show.json", params, HTTPMETHOD_GET,listener);
 	}
 
 	/**

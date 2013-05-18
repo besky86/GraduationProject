@@ -1,5 +1,6 @@
 package com.weibo.sdk.android.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,15 @@ import android.util.Log;
 //added   by Lei@2013/04/16 UPD START
 //public class User {
 //added   by Lei@2013/04/16 UPD END
-public class User {
+public class User implements Serializable {
 
+	/**
+	 * serialVersionUID:TODO
+	 * 
+	 * @since 1.0.0
+	 */
+
+	private static final long serialVersionUID = 1930366782876896475L;
 	// 用户UID
 	long id;
 	// 字符串型的用户UID
@@ -53,7 +61,7 @@ public class User {
 	int favourites_count;
 	// 用户创建时间
 	String created_at;
-	// 暂未支持
+	// 登录用户是否关注该用户
 	boolean following;
 	// 是否允许所有人给我发私信，true：是
 	boolean allow_all_act_msg;
@@ -433,6 +441,7 @@ public class User {
 		this.bi_followers_count = bi_followers_count;
 	}
 
+	
 	public String getLang() {
 		return lang;
 	}
