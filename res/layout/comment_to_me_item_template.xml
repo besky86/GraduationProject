@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_selector"
+    android:descendantFocusability="blocksDescendants" >
+
+    <ImageView
+        android:id="@+id/img_wb_item_head"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/usericon" />
+
+    <!-- 右边框架 -->
+
+   <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="vertical" >
+
+        <!-- 用户名称、新浪认证部分 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <!-- 用户名称 -->
+
+            <TextView
+                android:id="@+id/txt_comment_item_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/default_user_name"
+                android:textColor="#424d54"
+                android:textIsSelectable="true"
+                android:textSize="14sp"
+                android:textStyle="" />
+
+            <TextView
+                android:id="@+id/txt_comment_item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="@string/create_time"
+                android:textColor="#efa608"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- 评论内容 -->
+
+
+        <TextView
+            android:id="@+id/comment_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:textColor="#6b717b"
+            android:textIsSelectable="true"
+            android:textSize="14sp" />
+
+        <!-- 所评论对象那正文内容 -->
+
+        <TextView
+            android:id="@+id/source_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:autoLink="web"
+            android:background="@drawable/popup"
+            android:textColor="#6b717b"
+            android:textIsSelectable="true"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</LinearLayout>

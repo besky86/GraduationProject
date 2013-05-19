@@ -108,7 +108,11 @@ public class UserInfoActivity extends Activity {
 							.setBackgroundResource(R.drawable.btn_unfollow_shape);
 					btn_follow.setText(R.string.unfollow);
 				}
-				btn_follow.setVisibility(View.VISIBLE);
+				
+				//当是非用户一致时，不显示关注按钮
+				if (!user.getIdstr().equals(
+						MainTabActivity.accessToken.getUid()))
+					btn_follow.setVisibility(View.VISIBLE);
 
 				num_fav.setText("" + user.getFavourites_count());
 
@@ -146,6 +150,7 @@ public class UserInfoActivity extends Activity {
 		setContentView(R.layout.activity_user_info);
 		if (userId == 0) {
 			userId = getIntent().getLongExtra("user_id", 0l);
+			Log.e("Error", "" + userId);
 		}
 
 		getViews();
@@ -287,6 +292,7 @@ public class UserInfoActivity extends Activity {
 		public void onError(WeiboException e) {
 
 			// TODO Auto-generated method stub
+			Log.e("Error", e.getMessage());
 			Util.showToast(UserInfoActivity.this, "操作失败");
 
 		}

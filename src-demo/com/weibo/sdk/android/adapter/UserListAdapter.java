@@ -13,7 +13,6 @@ import com.weibo.sdk.android.util.StringUtil;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +23,7 @@ public class UserListAdapter extends BaseAdapter {
 
 	private Context context;
 	private List<User> users;
-	private User user;
+	// private User user;
 
 	private LayoutInflater mInflater;
 	/**
@@ -99,8 +98,8 @@ public class UserListAdapter extends BaseAdapter {
 		holder.status_text = (TextView) v.findViewById(R.id.tv_status);
 		holder.follow = (Button) v.findViewById(R.id.btn_follow);
 
-		user = users.get(position);
-		//Log.v("USER", user.getStatus().getText());
+		final User user = users.get(position);
+		// Log.v("USER", user.getStatus().getText());
 		holder.user_name.setText(user.getScreen_name());
 
 		Drawable image = AsynImageLoader.loadDrawable(
@@ -127,7 +126,9 @@ public class UserListAdapter extends BaseAdapter {
 			holder.follow.setBackgroundResource(R.drawable.btn_unfollow_shape);
 			holder.follow.setText(R.string.unfollow);
 		}
-		holder.follow.setVisibility(View.VISIBLE);
+		if (!user.getIdstr().equals(
+				MainTabActivity.accessToken.getUid()))
+		    holder.follow.setVisibility(View.VISIBLE);
 
 		holder.follow.setOnClickListener(new OnClickListener() {
 

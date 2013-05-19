@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
@@ -33,6 +34,8 @@ public class MainTabActivity extends TabActivity
 	private final String SEARCH_TAB = "Search";
 	private final String MORE_TAB = "More";
 	private HomeActivity homeActivity;
+	private UserInfoActivity infoActivity;
+	public static Activity activity;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -69,7 +72,9 @@ public class MainTabActivity extends TabActivity
 				.setContent(iNews));
 
 		iInfo = new Intent(this, UserInfoActivity.class);
-		intent.putExtra("user_id", Long.parseLong(MainTabActivity.accessToken.getUid()));
+		
+		iInfo.putExtra("user_id", Long.parseLong(MainTabActivity.accessToken.getUid()));
+		Log.e("Error", ""+Long.parseLong(MainTabActivity.accessToken.getUid()));
 		tabhost.addTab(tabhost
 				.newTabSpec(INFO_TAB)
 				.setIndicator(getResources().getString(R.string.main_my_info),
@@ -89,6 +94,8 @@ public class MainTabActivity extends TabActivity
 				.setIndicator(getResources().getString(R.string.more),
 						getResources().getDrawable(R.drawable.icon_5_n))
 				.setContent(iMore));
+		
+		activity =this;
 	}
 
 	@Override

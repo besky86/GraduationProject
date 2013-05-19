@@ -116,6 +116,14 @@
             android:name="com.weibo.sdk.android.demo.UserWeiboActivity"
             android:label="@string/title_activity_user_weibo" >
         </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.AtMeActivity"
+            android:label="@string/title_activity_at_me" >
+        </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.CommentToMeActivity"
+            android:label="@string/title_activity_comment_about_me" >
+        </activity>
     </application>
 
 </manifest>

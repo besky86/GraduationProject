@@ -93,7 +93,7 @@ public class NullRequestListener implements RequestListener {
 
 		// TODO Auto-generated method stub
 		Log.e("error", e.getMessage());
-		// Util.showToast(activity, "操作失败");
+		 Util.showToast(MainTabActivity.activity, "操作失败");
 
 	}
 

@@ -77,5 +77,7 @@
     <string name="title_activity_following">FollowingActivity</string>
     <string name="title_activity_follower_list">FollowerListActivity</string>
     <string name="title_activity_user_weibo">UserWeiboActivity</string>
+    <string name="title_activity_at_me">AtMeActivity</string>
+    <string name="title_activity_comment_about_me">CommentAboutMeActivity</string>
 
 </resources>
