@@ -181,7 +181,7 @@ public class CommentToMeAdapter extends BaseAdapter {
 		}
 
 	}
-	static class CommentHolder {
+	class CommentHolder {
 		ImageView user_head;
 		TextView tv_username;
 		TextView tv_createdtime;

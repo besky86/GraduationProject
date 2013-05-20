@@ -68,9 +68,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/user_head"
-                    android:text="asdjf"
-                    android:textSize="20sp"
-                     />
+                    android:text=""
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/btn_follow"
@@ -81,14 +80,12 @@
                     android:background="@drawable/btn_follow_shape"
                     android:text="@string/follow"
                     android:visibility="gone" />
-
-
             </RelativeLayout>
 
             <LinearLayout
-                android:layout_marginTop="10dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/tv_retrive_bg"
                 android:orientation="vertical" >
 
@@ -99,15 +96,15 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:textColor="#838B83"
                         android:layout_height="wrap_content"
-                        android:text="@string/tv_location" />
+                        android:text="@string/tv_location"
+                        android:textColor="#838B83" />
 
                     <TextView
-                        android:layout_marginLeft="10dp"
                         android:id="@+id/tv_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:singleLine="false"
                         android:textIsSelectable="false" />
                 </LinearLayout>
@@ -124,18 +121,18 @@
                     android:orientation="horizontal" >
 
                     <TextView
-                        android:textColor="#838B83"
                         android:id="@+id/tv_description_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/tv_description_title"
+                        android:textColor="#838B83"
                         android:textIsSelectable="false" />
 
                     <TextView
                         android:id="@+id/tv_despription"
                         android:layout_width="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:singleLine="false"
                         android:textIsSelectable="false" />
                 </LinearLayout>
@@ -270,7 +267,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 

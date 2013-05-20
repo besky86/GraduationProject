@@ -201,7 +201,8 @@ public class HomeActivity extends Activity implements OnScrollListener {
 
 		});
 
-		// 更新微博
+		// Delete by Lei@2013/05/20 DEL START
+		// // 更新微博
 		btn_refresh.setOnClickListener(new OnClickListener() {
 
 			@Override

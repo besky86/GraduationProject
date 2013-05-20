@@ -24,7 +24,6 @@ public class UserListAdapter extends BaseAdapter {
 	private Context context;
 	private List<User> users;
 	// private User user;
-
 	private LayoutInflater mInflater;
 	/**
 	 * users
@@ -126,9 +125,8 @@ public class UserListAdapter extends BaseAdapter {
 			holder.follow.setBackgroundResource(R.drawable.btn_unfollow_shape);
 			holder.follow.setText(R.string.unfollow);
 		}
-		if (!user.getIdstr().equals(
-				MainTabActivity.accessToken.getUid()))
-		    holder.follow.setVisibility(View.VISIBLE);
+		if (!user.getIdstr().equals(MainTabActivity.accessToken.getUid()))
+			holder.follow.setVisibility(View.VISIBLE);
 
 		holder.follow.setOnClickListener(new OnClickListener() {
 
