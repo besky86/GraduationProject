@@ -1,7 +1,5 @@
 package com.weibo.sdk.android.keep;
 
-import com.weibo.sdk.android.Oauth2AccessToken;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;

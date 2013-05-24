@@ -4,53 +4,36 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.weibo.sdk.android.WeiboException;
 import com.weibo.sdk.android.adapter.DialogListener;
-import com.weibo.sdk.android.api.FriendshipsAPI;
 import com.weibo.sdk.android.api.StatusesAPI;
-import com.weibo.sdk.android.api.UsersAPI;
-import com.weibo.sdk.android.demo.HomeActivity.UserRequestListener;
-import com.weibo.sdk.android.entity.Status;
-import com.weibo.sdk.android.entity.User;
 import com.weibo.sdk.android.net.RequestListener;
-import com.weibo.sdk.android.util.StringUtil;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.MediaStore;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.Editable;
-import android.text.Selection;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.Toast;
 
+@SuppressLint("SimpleDateFormat")
 public class WriteWeiboActivity extends Activity implements DialogListener {
 
 	private File filePic;
@@ -59,12 +42,8 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 	private ImageView inserted_iv;
 	private Button btn_clear;
 	private EditText et_content;
-	private ImageButton btn_insert_topic;
-	private ImageButton btn_insert_at;
 	private ImageButton btn_insert_pic;
-	private ArrayList<String> friendsNameList = new ArrayList<String>();
-	private ArrayList<CharSequence> friendsSNameList = new ArrayList<CharSequence>();
-	private ArrayList<String> topicList = new ArrayList<String>();
+
 	CharSequence[] friendsItems;
 	private Button btn_back;
 
@@ -75,31 +54,6 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 			Environment.getExternalStorageDirectory() + "/DCIM/Camera");// 拍摄照片存储的文件夹路劲
 	private File capturefile;// 拍摄的照片文件
 
-	Handler h = new Handler() {
-
-		public void handleMessage(Message msg) {
-			List<User> users = (ArrayList<User>) User.getUsersList(msg
-					.getData().getString("response"));
-			for (User user : users) {
-				friendsNameList.add(user.getScreen_name());
-				Log.v("users", user.getIdstr());
-			}
-
-			CharSequence[] friendsItems = new CharSequence[friendsNameList
-					.size()];
-			int index = 0;
-			while (index < friendsNameList.size()) {
-				friendsItems[index] = friendsNameList.get(index);
-				Log.v("friends", friendsItems[index].toString());
-				index++;
-			}
-
-			addListeners();
-
-			// getUsers(statusList);
-
-		}
-	};
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -108,8 +62,6 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 		getViews();
 
 		addListeners();
-		
-
 
 	}
 
@@ -120,30 +72,21 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 		inserted_iv = (ImageView) findViewById(R.id.add_image_iv);
 		btn_clear = (Button) findViewById(R.id.btn_clear);
 		et_content = (EditText) findViewById(R.id.et_content);
-		btn_insert_at = (ImageButton) findViewById(R.id.btn_tool_at);
-		btn_insert_topic = (ImageButton) findViewById(R.id.btn_tool_topic);
 		btn_back = (Button) findViewById(R.id.btn_back);
-		FriendshipsAPI friendShipAPI = new FriendshipsAPI(
-				MainTabActivity.accessToken);
-		friendShipAPI.friends(
-				Long.parseLong(MainTabActivity.accessToken.getUid()), 50, 0,
-				false, new FriendsRequestListenerLisener());
-
 	}
 	private void addListeners() {
-		
-		btn_back.setOnClickListener(new OnClickListener( ){
+
+		btn_back.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				
+
 				// TODO Auto-generated method stub
 				WriteWeiboActivity.this.finish();
 			}
-			
+
 		});
-		
-		
+
 		btn_send.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -219,127 +162,6 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 				// TODO Auto-generated method stub
 				WriteWeiboActivity.this.et_content.setText("");
 
-			}
-
-		});
-
-		btn_insert_at.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				// TODO Auto-generated method stub
-				int start = et_content.getSelectionStart();
-				Log.v("StartIn11", "" + start);
-				Editable editable = et_content.getText();
-				et_content.setText(editable.insert(start, "@"));
-
-				editable = et_content.getText();
-				Selection.setSelection(editable, ++start);
-
-				Log.v("StartIn", "" + start);
-
-				// 创建builder
-				final AlertDialog.Builder builder = new AlertDialog.Builder(
-						WriteWeiboActivity.this);
-
-				builder.setTitle("好友列表")
-						// 标题
-						.setIcon(R.drawable.btn_insert_at_nor)
-						// icon
-						.setItems(
-								friendsItems,
-								new android.content.DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										Editable editable = et_content
-												.getText();
-
-										int start = et_content
-												.getSelectionStart();
-										// Editable editable = et_content
-										// .getText();
-										editable.insert(start,
-												friendsItems[which] + " ");
-
-										start += (friendsItems[which].length() + 1);
-
-										et_content.setText(StringUtil
-												.getSpannableString(et_content
-														.getText().toString()));
-
-										editable = et_content.getText();
-										Log.v("StartIn", "" + start);
-										// 将光标设置在所@用户之后
-										Selection.setSelection(editable, start);
-									}
-
-								});
-				// 创建Dialog对象
-				AlertDialog dlg = builder.create();
-				dlg.show();
-			}
-
-		});
-
-		btn_insert_topic.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				// TODO Auto-generated method stub
-				int start = et_content.getSelectionStart();
-				Log.v("StartIn11", "" + start);
-				Editable editable = et_content.getText();
-				et_content.setText(editable.insert(start, "##"));
-
-				editable = et_content.getText();
-				Selection.setSelection(editable, ++start);
-
-				Log.v("StartIn", "" + start);
-
-				final CharSequence[] items = {"Item1", "Item2", "Item3"};
-
-				// 创建builder
-				final AlertDialog.Builder builder = new AlertDialog.Builder(
-						WriteWeiboActivity.this);
-
-				builder.setTitle("话题选择列表")
-						// 标题
-						.setIcon(R.drawable.btn_insert_topic_nor)
-						// icon
-						.setItems(
-								items,
-								new android.content.DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										Editable editable = et_content
-												.getText();
-
-										int start = et_content
-												.getSelectionStart();
-										// Editable editable = et_content
-										// .getText();
-										editable.insert(start, items[which]);
-
-										start += (items[which].length() + 1);
-
-										et_content.setText(StringUtil
-												.getSpannableString(et_content
-														.getText().toString()));
-
-										editable = et_content.getText();
-										Log.v("StartIn", "" + start);
-										// 将光标设置在所@用户之后
-										Selection.setSelection(editable, start);
-									}
-
-								});
-				// 创建Dialog对象
-				AlertDialog dlg = builder.create();
-				dlg.show();
 			}
 
 		});
@@ -468,42 +290,7 @@ public class WriteWeiboActivity extends Activity implements DialogListener {
 
 	}
 
-	class FriendsRequestListenerLisener implements RequestListener {
-		@Override
-		public void onComplete(String response) {
-
-			// Delete by Lei@2013/05/07 DEL START
-			// List<User> users = (ArrayList<User>) User.getUsersList(response);
-			// for (User user : users) {
-			// friendsNameList.add(user.getScreen_name());
-			// }
-			// Delete by Lei@2013/05/07 DEL END
-			// TODO Auto-generated method stub
-			// Delete by Lei@2013/05/07 DEL START
-			Log.v("users", response);
-			Message msg = new Message();
-			msg.getData().putString("response", response);
-			WriteWeiboActivity.this.h.sendMessage(msg);
-			// Delete by Lei@2013/05/07 DEL END
-
-		}
-
-		@Override
-		public void onIOException(IOException e) {
-
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void onError(WeiboException e) {
-
-			// TODO Auto-generated method stub
-
-		}
-
-	}
-
+	
 	String getPhotoFileName() {
 		Date date = new Date(System.currentTimeMillis());
 		SimpleDateFormat dateFormat = new SimpleDateFormat(

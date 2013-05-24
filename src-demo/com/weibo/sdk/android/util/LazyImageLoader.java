@@ -24,8 +24,7 @@ import java.lang.Thread.State;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-import android.app.Application;
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -48,6 +47,7 @@ import android.util.Log;
  * @version 1.0.0
  * 
  */
+@SuppressLint("HandlerLeak")
 public class LazyImageLoader {
 	private static final int MESSAGE_ID = 1;
 	public static final String EXTRA_IMG_URL = "image_url";
@@ -62,7 +62,7 @@ public class LazyImageLoader {
 
 	Handler handler = new Handler() {
 
-		public void handMessage(Message msg) {
+		public void handleMessage(Message msg) {
 
 			switch (msg.what) {
 				case MESSAGE_ID :

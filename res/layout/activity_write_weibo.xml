@@ -40,12 +40,15 @@
             android:background="@drawable/btn_clear_content_selector"
             android:text="@string/max_num"
             android:textColor="#ff3030" />
-    </RelativeLayout>
 
-    <include
-        android:id="@+id/layout_progress"
-        android:layout_weight="1"
-        layout="@layout/write_bottom_title_bar"
-        android:gravity="bottom" />
+        <ImageButton
+            android:id="@+id/btn_tool_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/title_group_middle_bg"
+            android:src="@drawable/btn_insert_pic_nor" />
+    </RelativeLayout>
 
 </LinearLayout>

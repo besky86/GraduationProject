@@ -8,11 +8,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	private static final int DATABASE_VERSION = 1;
 	private static final String DATABASE_NAME = "weibo.db";
-	private Context mContext;
-	private static final String CREATE_USER_TABLE = "CREATE  TABLE USER ("
-			+ "_ID INTEGER PRIMARY KEY, " + "uid  TEXT," + "token TEXT,"
-			+ "expiresTime  DOUBLE);";
-
 	private static final String CREATE_USERINFO_TABLE = "CREATE TABLE IF NOT EXISTS UserInfo("
 			+ "_id INTEGER PRIMARY KEY,"
 			+ "uid TEXT,"
@@ -23,7 +18,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	public DBHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
-		mContext = context;
 	}
 
 	public void onCreate(SQLiteDatabase db) {

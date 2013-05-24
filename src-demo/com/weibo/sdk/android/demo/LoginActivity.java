@@ -1,15 +1,11 @@
 package com.weibo.sdk.android.demo;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.weibo.sdk.android.util.NetUtil;
 import com.weibo.sdk.android.util.Tools;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
@@ -20,7 +16,6 @@ import com.weibo.sdk.android.WeiboException;
 import com.weibo.sdk.android.adapter.UserInfoListAdapter;
 import com.weibo.sdk.android.api.StatusesAPI;
 import com.weibo.sdk.android.api.UsersAPI;
-import com.weibo.sdk.android.demo.TestActivity.StatusRequestListener;
 import com.weibo.sdk.android.entity.UserInfo;
 import com.weibo.sdk.android.keep.AccessTokenKeeper;
 import com.weibo.sdk.android.net.RequestListener;
@@ -29,17 +24,15 @@ import com.weibo.sdk.android.services.UserInfoService;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
@@ -47,13 +40,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-import com.weibo.sdk.android.net.RequestListener;
-
+@SuppressLint("HandlerLeak")
 public class LoginActivity extends Activity {
 
 	private UserInfoService service;
@@ -64,7 +55,6 @@ public class LoginActivity extends Activity {
 	List<UserInfo> users = null;
 	private ImageButton addAccountButton;
 	private Button buttonLogin;
-	private Button selectButton;
 	private Weibo mWeibo;
 	private static final String CONSUMER_KEY = "1325775247";// "966056985";//
 															// 替换为开发者的appkey，例如"1646212860";
@@ -111,16 +101,6 @@ public class LoginActivity extends Activity {
 
 		setListeners();
 
-		// Delete by Lei@2013/05/05 DEL START
-		// if (null == users || users.isEmpty()) {
-		// buttonLogin.setEnabled(false);
-		//
-		// }
-		// else {
-		//
-		// }
-		// Delete by Lei@2013/05/05 DEL END
-
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -147,7 +127,7 @@ public class LoginActivity extends Activity {
 		users.remove(user);
 		users.add(0, user);
 
-		Log.v("user",user.getUserName());
+		Log.v("user", user.getUserName());
 		UserInfoListAdapter adapter = new UserInfoListAdapter(this, users);
 		spinner.setAdapter(adapter);
 
@@ -212,6 +192,8 @@ public class LoginActivity extends Activity {
 							new Oauth2AccessToken(user.getUserId(), user
 									.getToken(), user.getExpiresTime()));
 
+					accessToken = AccessTokenKeeper
+							.readAccessToken(LoginActivity.this);
 					Intent intent = new Intent(LoginActivity.this,
 							MainTabActivity.class);
 					// Intent intent = new Intent(LoginActivity.this,
@@ -220,8 +202,9 @@ public class LoginActivity extends Activity {
 					intent.putExtra("AccessToken", LoginActivity.accessToken);
 					intent.putExtra("username", user.getUserName());
 					intent.putExtra("user_id", user.getId());
-					
-				//	intent.putExtra("AccessToken", LoginActivity.accessToken);
+
+					// intent.putExtra("AccessToken",
+					// LoginActivity.accessToken);
 					// Add or Update by Lei@2013/05/05 UPD END
 					LoginActivity.this.startActivity(intent);
 					// LoginActivity.this.finish( );
@@ -254,9 +237,7 @@ public class LoginActivity extends Activity {
 				AccessTokenKeeper.keepAccessToken(LoginActivity.this,
 						accessToken);
 				if (null != accessToken) {
-					// AccountAPI account = new AccountAPI(accessToken);
-					// account.getUid(new UIDRequestListener());
-					StatusesAPI statuses = new StatusesAPI(accessToken);
+					new StatusesAPI(accessToken);
 					UsersAPI usersAPI = new UsersAPI(accessToken);
 
 					usersAPI.show(Long.parseLong(accessToken.getUid()),
@@ -320,7 +301,6 @@ public class LoginActivity extends Activity {
 				// public void run() {
 				// // TODO Auto-generated method stub
 
-				
 				user.setUserIcon(Tools.getDrawablFromUrl(url));
 				Message message = new Message();
 				message.obj = user;

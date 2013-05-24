@@ -10,13 +10,13 @@ import org.json.JSONObject;
 import com.weibo.sdk.android.WeiboException;
 import com.weibo.sdk.android.adapter.*;
 import com.weibo.sdk.android.api.*;
-import com.weibo.sdk.android.demo.FollowerListActivity.UserRequestListener;
 import com.weibo.sdk.android.entity.*;
 import com.weibo.sdk.android.net.RequestListener;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
@@ -26,6 +26,7 @@ import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.*;
 
+@SuppressLint("HandlerLeak")
 public class FollowerListActivity extends Activity {
 
 	private static final String TAG = "FollowerAvtivity";
@@ -122,6 +123,32 @@ public class FollowerListActivity extends Activity {
 	}
 
 	private void setListeners() {
+		
+		btn_back.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				// TODO Auto-generated method stub
+				FollowerListActivity.this.finish();
+
+			}
+
+		});
+		btn_home.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(FollowerListActivity.this,
+						MainTabActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+				startActivity(intent);
+
+			}
+
+		});
 		lv_follower.setOnItemClickListener(new ListView.OnItemClickListener() {
 
 			@Override

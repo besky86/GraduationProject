@@ -1,6 +1,5 @@
 package com.weibo.sdk.android.entity;
 
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
 /**

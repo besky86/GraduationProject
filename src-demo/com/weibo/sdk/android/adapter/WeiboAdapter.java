@@ -7,15 +7,11 @@ import com.weibo.sdk.android.demo.R;
 import com.weibo.sdk.android.entity.*;
 import com.weibo.sdk.android.util.AsynImageLoader;
 import com.weibo.sdk.android.util.ImageCallback;
-import com.weibo.sdk.android.util.SimpleImageLoader;
 import com.weibo.sdk.android.util.StringUtil;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,8 +31,6 @@ import android.widget.TextView;
 public class WeiboAdapter extends BaseAdapter {
 
 	public List<Status> status;
-
-	private Context context;
 
 	private LayoutInflater mInflater;
 
@@ -127,14 +121,6 @@ public class WeiboAdapter extends BaseAdapter {
 								ImageView imageView) {
 
 							// TODO Auto-generated method stub
-
-							// Delete by Lei@2013/05/09 DEL START
-							// imageView
-							// .setLayoutParams(new LinearLayout.LayoutParams(
-							// drawable.getIntrinsicHeight() / 5,
-							// drawable.getIntrinsicWidth() / 5));
-							// Delete by Lei@2013/05/09 DEL END
-
 							imageView.setImageDrawable(drawable);
 						}
 					});

@@ -10,13 +10,13 @@ import org.json.JSONObject;
 import com.weibo.sdk.android.WeiboException;
 import com.weibo.sdk.android.adapter.*;
 import com.weibo.sdk.android.api.*;
-import com.weibo.sdk.android.demo.FollowingActivity.UserRequestListener;
 import com.weibo.sdk.android.entity.*;
 import com.weibo.sdk.android.net.RequestListener;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
@@ -25,7 +25,15 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.*;
-
+/**
+ * 关注界面
+ * FollowingActivity
+ * 2013-5-24 下午8:50:41
+ * 
+ * @version 1.0.0
+ *
+ */
+@SuppressLint("HandlerLeak")
 public class FollowingActivity extends Activity {
 
 	private static final String TAG = "FollowingAvtivity";
@@ -94,7 +102,6 @@ public class FollowingActivity extends Activity {
 			Log.v(TAG, msg.getData().getString("response"));
 		}
 	};
-	private int max;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +109,6 @@ public class FollowingActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_following);
 		userId = getIntent().getLongExtra("user_id", 0l);
-		max = getIntent().getIntExtra("following_num", 0);
 		getViews();
 		setListeners();
 		showUsers();
@@ -119,6 +125,32 @@ public class FollowingActivity extends Activity {
 	}
 
 	private void setListeners() {
+
+		btn_back.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				// TODO Auto-generated method stub
+				FollowingActivity.this.finish();
+
+			}
+
+		});
+		btn_home.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(FollowingActivity.this,
+						MainTabActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+
+			}
+
+		});
 		lv_following.setOnItemClickListener(new ListView.OnItemClickListener() {
 
 			@Override

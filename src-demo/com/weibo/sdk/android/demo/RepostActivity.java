@@ -1,25 +1,14 @@
 package com.weibo.sdk.android.demo;
 
-import java.io.File;
 import java.io.IOException;
 
 import com.weibo.sdk.android.WeiboException;
-import com.weibo.sdk.android.api.FriendshipsAPI;
 import com.weibo.sdk.android.api.StatusesAPI;
 import com.weibo.sdk.android.api.WeiboAPI.COMMENTS_TYPE;
 import com.weibo.sdk.android.net.RequestListener;
-import com.weibo.sdk.android.util.StringUtil;
-
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.text.Editable;
-import android.text.Selection;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
@@ -29,8 +18,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 
 public class RepostActivity extends Activity {
 

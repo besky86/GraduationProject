@@ -1,7 +1,6 @@
 package com.weibo.sdk.android.demo;
 
 import java.io.IOException;
-import java.net.IDN;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +9,13 @@ import com.weibo.sdk.android.adapter.*;
 import com.weibo.sdk.android.api.*;
 import com.weibo.sdk.android.api.WeiboAPI.AUTHOR_FILTER;
 
-import com.weibo.sdk.android.demo.HomeActivity.StatusesRequestListener;
-import com.weibo.sdk.android.demo.HomeActivity.UserRequestListener;
 import com.weibo.sdk.android.entity.*;
 import com.weibo.sdk.android.net.RequestListener;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
@@ -25,8 +23,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
+@SuppressLint("HandlerLeak")
 public class CommentListActivity extends Activity {
 
 	UsersAPI userAPI = new UsersAPI(MainTabActivity.accessToken);
@@ -35,7 +33,7 @@ public class CommentListActivity extends Activity {
 	List<Comment> comments = new ArrayList<Comment>();
 	CommentListAdapter adapter;
 	// private int visibleLastIndex = 0; // 最后的可视项索引
-	private int visibleItemCount; // 当前窗口可见项总数
+	//private int visibleItemCount; // 当前窗口可见项总数
 
 	private long id;
 	// private View titleView;
@@ -173,7 +171,7 @@ public class CommentListActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(CommentListActivity.this,
 						CommentActivity.class);
-				intent.putExtra("comment_id", id);
+				intent.putExtra("status_id", id);
 				startActivity(intent);
 
 			}

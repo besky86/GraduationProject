@@ -22,7 +22,6 @@ package com.weibo.sdk.android.adapter;
 
 import java.util.List;
 
-import com.weibo.sdk.android.adapter.WeiboAdapter.WeiboHolder;
 import com.weibo.sdk.android.demo.R;
 import com.weibo.sdk.android.entity.*;
 import com.weibo.sdk.android.util.AsynImageLoader;
@@ -31,7 +30,6 @@ import com.weibo.sdk.android.util.StringUtil;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,8 +54,6 @@ import android.widget.*;
 public class CommentToMeAdapter extends BaseAdapter {
 
 	public List<Comment> comments;
-
-	private Context context;
 
 	private LayoutInflater mInflater;
 

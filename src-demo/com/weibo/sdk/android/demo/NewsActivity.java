@@ -33,7 +33,8 @@ public class NewsActivity extends ActivityGroup implements
     private ArrayList<TextView> textViews;  
     private ViewPager viewPager;  
     private ArrayList<View> pageViews;  
-    private HorizontalScrollView horizontalScrollView;  
+    @SuppressWarnings("unused")
+	private HorizontalScrollView horizontalScrollView;  
   
     /*** 
      *初始化视图 

@@ -1,7 +1,6 @@
 package com.weibo.sdk.android.entity;
 
 import java.util.ArrayList;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;

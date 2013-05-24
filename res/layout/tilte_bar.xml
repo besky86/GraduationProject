@@ -17,14 +17,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:background="@drawable/btn_wb_write_selector" />
-
-        <Button
-            android:id="@+id/btn_locate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_locate_selector" />
     </LinearLayout>
 
     <LinearLayout

@@ -3,7 +3,6 @@ package com.weibo.sdk.android.entity;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -14,11 +13,7 @@ import android.util.Log;
 
 import com.weibo.sdk.android.WeiboException;
 
-import com.weibo.sdk.android.api.UsersAPI;
-import com.weibo.sdk.android.demo.MainTabActivity;
-import com.weibo.sdk.android.demo.TestActivity;
 import com.weibo.sdk.android.net.RequestListener;
-import com.weibo.sdk.android.util.StringUtil;
 
 public class Status implements Serializable, Comparable {
 
@@ -530,8 +525,6 @@ class Visible implements Serializable {
 }
 
 class UsersRequestListener implements RequestListener {
-
-	private static final String TAG = "UserRequestListener";
 
 	Status s;
 

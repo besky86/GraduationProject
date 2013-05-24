@@ -8,20 +8,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.weibo.sdk.android.WeiboException;
-import com.weibo.sdk.android.adapter.WeiboAdapter.WeiboHolder;
-import com.weibo.sdk.android.api.UsersAPI;
-import com.weibo.sdk.android.demo.MainTabActivity;
 import com.weibo.sdk.android.demo.R;
-import com.weibo.sdk.android.demo.SearchActivity;
-import com.weibo.sdk.android.demo.Util;
 import com.weibo.sdk.android.entity.*;
 import com.weibo.sdk.android.net.RequestListener;
-import com.weibo.sdk.android.util.AsynImageLoader;
-import com.weibo.sdk.android.util.ImageCallback;
 import com.weibo.sdk.android.util.StringUtil;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,8 +39,6 @@ import android.widget.*;
 public class SearchUsertAdapter extends BaseAdapter {
 
 	public List<User2Search> users = new ArrayList<User2Search>();
-
-	private Context context;
 
 	private LayoutInflater mInflater;
 

@@ -2,11 +2,9 @@ package com.weibo.sdk.android.keep;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.database.sqlite.SQLiteDatabase;
 
 /**
  * 璇ョ被鐢ㄤ簬淇濆瓨Oauth2AccessToken鍒皊harepreference锛屽苟鎻愪緵璇诲彇鍔熻兘
@@ -61,7 +59,7 @@ public class AccessTokenKeeper {
 	public static Oauth2AccessToken readAccessToken(Context context) {
 		Oauth2AccessToken token = new Oauth2AccessToken();
 		SharedPreferences pref = context.getSharedPreferences(PREFERENCES_NAME,
-				Context.MODE_APPEND);
+				Context.MODE_PRIVATE);
 		token.setToken(pref.getString("token", ""));
 		token.setExpiresTime(pref.getLong("expiresTime", 0));
 		// added by Lei@2013/04/12 UPD START

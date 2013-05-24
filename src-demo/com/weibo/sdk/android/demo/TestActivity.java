@@ -1,19 +1,10 @@
 package com.weibo.sdk.android.demo;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
 import com.weibo.sdk.android.WeiboException;
-import com.weibo.sdk.android.api.AccountAPI;
-import com.weibo.sdk.android.api.StatusesAPI;
-import com.weibo.sdk.android.api.WeiboAPI;
-import com.weibo.sdk.android.demo.HomeActivity.StatusesRequestListener;
 import com.weibo.sdk.android.entity.Status;
 import com.weibo.sdk.android.net.RequestListener;
 import com.weibo.sdk.android.util.SimpleImageLoader;
@@ -21,6 +12,7 @@ import com.weibo.sdk.android.util.SimpleImageLoader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
@@ -33,6 +25,7 @@ import android.widget.TextView;
  * @author lei
  * 
  */
+@SuppressLint("HandlerLeak")
 public class TestActivity extends Activity {
 	private final String TAG = "TestActivity";
 	private TextView testView;
@@ -50,8 +43,6 @@ public class TestActivity extends Activity {
 
 				case 2 :
 
-					// JSON数据解析示例
-					JSONArray jsonArray;
 					List<Status> statusList = Status.getStatusesList((msg
 							.getData().getString("response")));
 					Log.v(TAG, statusList.get(0).getUser().getScreen_name());

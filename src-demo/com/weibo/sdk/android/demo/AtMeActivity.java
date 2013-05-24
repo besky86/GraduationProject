@@ -16,6 +16,7 @@ import com.weibo.sdk.android.net.RequestListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
 
+@SuppressLint("HandlerLeak")
 public class AtMeActivity extends Activity {
 
 	private String TAG = "ATME";
@@ -31,7 +33,6 @@ public class AtMeActivity extends Activity {
 	List<Status> statuses = new ArrayList<Status>();
 	private View moreView;
 	private long sinceId = 0;
-	private long mid = 0;
 	private long maxId = 0;
 
 	Handler h = new Handler() {

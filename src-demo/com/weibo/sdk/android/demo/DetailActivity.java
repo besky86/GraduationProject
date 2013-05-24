@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -246,7 +245,10 @@ public class DetailActivity extends Activity {
 			public void onClick(View v) {
 
 				// TODO Auto-generated method stub
-				DetailActivity.this.finish();
+				Intent intent = new Intent(DetailActivity.this,
+						MainTabActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+				startActivity(intent);
 
 			}
 

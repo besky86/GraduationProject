@@ -10,7 +10,6 @@ import com.weibo.sdk.android.api.FriendshipsAPI;
 import com.weibo.sdk.android.api.UsersAPI;
 import com.weibo.sdk.android.entity.User;
 import com.weibo.sdk.android.net.RequestListener;
-import com.weibo.sdk.android.requestlisteners.GetUserRequestListener;
 import com.weibo.sdk.android.requestlisteners.NullRequestListener;
 import com.weibo.sdk.android.util.AsynImageLoader;
 import com.weibo.sdk.android.util.ImageCallback;
@@ -19,16 +18,17 @@ import com.weibo.sdk.android.util.StringUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.*;
 
+@SuppressLint("HandlerLeak")
 public class UserInfoActivity extends Activity {
 	private long userId = 0;
 
@@ -48,7 +48,6 @@ public class UserInfoActivity extends Activity {
 	private TextView num_follower;
 	private TextView num_fav;
 
-	private Drawable image_head;
 	private User user;
 
 	Handler h = new Handler() {
@@ -78,7 +77,6 @@ public class UserInfoActivity extends Activity {
 						});
 
 				if (image != null) {
-					image_head = image;
 					user_head.setImageDrawable(image);
 				}
 				user_name.setText(user.getScreen_name());
@@ -108,8 +106,8 @@ public class UserInfoActivity extends Activity {
 							.setBackgroundResource(R.drawable.btn_unfollow_shape);
 					btn_follow.setText(R.string.unfollow);
 				}
-				
-				//当是非用户一致时，不显示关注按钮
+
+				// 当是非用户一致时，不显示关注按钮
 				if (!user.getIdstr().equals(
 						MainTabActivity.accessToken.getUid()))
 					btn_follow.setVisibility(View.VISIBLE);
@@ -179,10 +177,27 @@ public class UserInfoActivity extends Activity {
 		num_follower = (TextView) findViewById(R.id.num_follower);
 
 		num_fav = (TextView) findViewById(R.id.num_fav);
+		if(userId ==Long.parseLong( MainTabActivity.accessToken.getUid())){
+			btn_back.setVisibility(View.INVISIBLE);
+			btn_home.setVisibility(View.INVISIBLE);
+		}
 
 	}
 
 	private void setListeners() {
+		
+		btn_back.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				// TODO Auto-generated method stub
+				UserInfoActivity.this.finish();
+
+			}
+
+		});
+	
 
 		followLayout.setOnClickListener(new OnClickListener() {
 
@@ -218,7 +233,6 @@ public class UserInfoActivity extends Activity {
 
 		btn_follow.setOnClickListener(new OnClickListener() {
 
-			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View arg0) {
 
@@ -262,6 +276,21 @@ public class UserInfoActivity extends Activity {
 					startActivity(intent);
 
 				}
+			}
+
+		});
+
+		btn_home.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(UserInfoActivity.this,
+						MainTabActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+				startActivity(intent);
+
 			}
 
 		});

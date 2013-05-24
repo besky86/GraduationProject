@@ -1,14 +1,8 @@
 package com.weibo.sdk.android.demo;
 
-import java.io.IOException;
-
-import com.weibo.sdk.android.WeiboException;
 import com.weibo.sdk.android.api.*;
 import com.weibo.sdk.android.api.WeiboAPI.COMMENTS_TYPE;
-import com.weibo.sdk.android.demo.RepostActivity.RepostStatusRequestListener;
 import com.weibo.sdk.android.requestlisteners.*;
-import com.weibo.sdk.android.net.RequestListener;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.text.Editable;
@@ -29,12 +23,14 @@ public class CommentActivity extends Activity {
 	private CheckBox comment_repost;
 
 	private long statusId;
+	private long commentId;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment);
 		statusId = CommentActivity.this.getIntent().getLongExtra("status_id",
 				-1);
+		commentId=CommentActivity.this.getIntent().getLongExtra("comment_id", -1);
 		getViews();
 		addListeners();
 	}

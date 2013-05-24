@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.weibo.sdk.android.WeiboException;
 import com.weibo.sdk.android.adapter.*;
 import com.weibo.sdk.android.api.*;
@@ -19,6 +16,7 @@ import com.weibo.sdk.android.requestlisteners.FavoriteRequestListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -31,6 +29,7 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 import android.widget.AdapterView.OnItemLongClickListener;
 
+@SuppressLint("HandlerLeak")
 public class UserWeiboActivity extends Activity {
 
 	private static final String TAG = "FollowerAvtivity";
@@ -115,6 +114,32 @@ public class UserWeiboActivity extends Activity {
 	}
 
 	private void setListeners() {
+		
+		btn_back.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				// TODO Auto-generated method stub
+				UserWeiboActivity.this.finish();
+
+			}
+
+		});
+		btn_home.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(UserWeiboActivity.this,
+						MainTabActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+				startActivity(intent);
+
+			}
+
+		});
 		lv_user_weibo
 				.setOnItemClickListener(new ListView.OnItemClickListener() {
 

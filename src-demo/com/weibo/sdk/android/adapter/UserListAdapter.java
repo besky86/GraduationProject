@@ -21,7 +21,6 @@ import android.widget.*;
 
 public class UserListAdapter extends BaseAdapter {
 
-	private Context context;
 	private List<User> users;
 	// private User user;
 	private LayoutInflater mInflater;
@@ -45,7 +44,6 @@ public class UserListAdapter extends BaseAdapter {
 	}
 
 	public UserListAdapter(Context context, List<User> users) {
-		this.context = context;
 		this.users = users;
 		mInflater = LayoutInflater.from(context);
 	}

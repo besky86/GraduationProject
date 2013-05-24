@@ -1,18 +1,13 @@
 package com.weibo.sdk.android.demo;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.weibo.sdk.android.WeiboException;
-import com.weibo.sdk.android.comparator.ComparatorStatus;
-import com.weibo.sdk.android.demo.TestActivity.StatusRequestListener;
 import com.weibo.sdk.android.entity.*;
 import com.weibo.sdk.android.net.RequestListener;
 import com.weibo.sdk.android.requestlisteners.FavoriteRequestListener;
@@ -23,12 +18,9 @@ import com.weibo.sdk.android.api.StatusesAPI;
 import com.weibo.sdk.android.api.UsersAPI;
 import com.weibo.sdk.android.api.WeiboAPI;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -42,9 +34,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -61,9 +51,6 @@ public class HomeActivity extends Activity implements OnScrollListener {
 	List<Status> statuses = new ArrayList<Status>();
 	WeiboAdapter adapter;
 	private int visibleLastIndex = 0; // 最后的可视项索引
-	private int visibleItemCount; // 当前窗口可见项总数
-
-	private View titleView;
 	private Button btn_write;
 	private Button btn_refresh;
 
@@ -502,8 +489,6 @@ public class HomeActivity extends Activity implements OnScrollListener {
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 
-		// TODO Auto-generated method stub
-		this.visibleItemCount = visibleItemCount;
 		visibleLastIndex = firstVisibleItem + visibleItemCount - 1;
 
 	}

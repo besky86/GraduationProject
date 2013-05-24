@@ -1,14 +1,8 @@
 package com.weibo.sdk.android.demo;
 
-import com.weibo.sdk.android.Oauth2AccessToken;
-
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.Window;
@@ -17,11 +11,10 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class LogoActivity extends Activity {
 
-    private static final String PREFERENCES_NAME = "firstuse";
+  
     public static String TAG = "LogoActivity";
 
     @Override

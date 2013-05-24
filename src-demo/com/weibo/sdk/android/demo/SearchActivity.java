@@ -5,24 +5,17 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.weibo.sdk.android.WeiboException;
 import com.weibo.sdk.android.adapter.SearchUsertAdapter;
 import com.weibo.sdk.android.api.SearchAPI;
-import com.weibo.sdk.android.api.UsersAPI;
-import com.weibo.sdk.android.demo.HomeActivity.UserRequestListener;
-import com.weibo.sdk.android.entity.Status;
-import com.weibo.sdk.android.entity.User;
 import com.weibo.sdk.android.entity.User2Search;
 import com.weibo.sdk.android.net.RequestListener;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,6 +26,7 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 
+@SuppressLint("HandlerLeak")
 public class SearchActivity extends Activity {
 	private final String TAG = "SearchActivity";
 
@@ -158,6 +152,7 @@ public class SearchActivity extends Activity {
 
 		btn_search.setOnClickListener(new OnClickListener() {
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View arg0) {
 

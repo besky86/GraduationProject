@@ -6,19 +6,16 @@ import java.util.List;
 
 import com.weibo.sdk.android.WeiboException;
 import com.weibo.sdk.android.adapter.CommentToMeAdapter;
-import com.weibo.sdk.android.adapter.WeiboAdapter;
 import com.weibo.sdk.android.api.CommentsAPI;
-import com.weibo.sdk.android.api.StatusesAPI;
 import com.weibo.sdk.android.api.WeiboAPI.AUTHOR_FILTER;
 import com.weibo.sdk.android.api.WeiboAPI.SRC_FILTER;
-import com.weibo.sdk.android.api.WeiboAPI.TYPE_FILTER;
 import com.weibo.sdk.android.entity.Comment;
-import com.weibo.sdk.android.entity.Status;
 import com.weibo.sdk.android.net.RequestListener;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
@@ -26,6 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
 
+@SuppressLint("HandlerLeak")
 public class CommentToMeActivity extends Activity {
 
 	private String TAG = "CommentAboutMe";
@@ -34,7 +32,6 @@ public class CommentToMeActivity extends Activity {
 	List<Comment> comments = new ArrayList<Comment>();
 	private View moreView;
 	private long sinceId = 0;
-	private long mid = 0;
 	private long maxId = 0;
 
 	Handler h = new Handler() {

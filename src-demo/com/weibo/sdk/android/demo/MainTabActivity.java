@@ -1,20 +1,19 @@
 package com.weibo.sdk.android.demo;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
+import com.weibo.sdk.android.keep.AccessTokenKeeper;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.util.Log;
-import android.view.Menu;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
-import android.widget.Toast;
 
+@SuppressWarnings("deprecation")
 public class MainTabActivity extends TabActivity
 		implements
 			OnCheckedChangeListener {
@@ -33,11 +32,8 @@ public class MainTabActivity extends TabActivity
 	private final String INFO_TAB = "MyInfo";
 	private final String SEARCH_TAB = "Search";
 	private final String MORE_TAB = "More";
-	private HomeActivity homeActivity;
-	private UserInfoActivity infoActivity;
 	public static Activity activity;
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,6 +46,7 @@ public class MainTabActivity extends TabActivity
 		Intent intent = MainTabActivity.this.getIntent();
 		accessToken = (Oauth2AccessToken) intent
 				.getSerializableExtra("AccessToken");
+		accessToken = AccessTokenKeeper.readAccessToken(MainTabActivity.this);
 		userName = intent.getStringExtra("username");
 		userId = intent.getLongExtra("user_id", -1);
 		// Add or Update by Lei@2013/05/05 UPD END
@@ -72,9 +69,11 @@ public class MainTabActivity extends TabActivity
 				.setContent(iNews));
 
 		iInfo = new Intent(this, UserInfoActivity.class);
-		
-		iInfo.putExtra("user_id", Long.parseLong(MainTabActivity.accessToken.getUid()));
-		Log.e("Error", ""+Long.parseLong(MainTabActivity.accessToken.getUid()));
+
+		iInfo.putExtra("user_id",
+				Long.parseLong(MainTabActivity.accessToken.getUid()));
+		Log.e("Error",
+				"" + Long.parseLong(MainTabActivity.accessToken.getUid()));
 		tabhost.addTab(tabhost
 				.newTabSpec(INFO_TAB)
 				.setIndicator(getResources().getString(R.string.main_my_info),
@@ -94,8 +93,8 @@ public class MainTabActivity extends TabActivity
 				.setIndicator(getResources().getString(R.string.more),
 						getResources().getDrawable(R.drawable.icon_5_n))
 				.setContent(iMore));
-		
-		activity =this;
+
+		activity = this;
 	}
 
 	@Override
@@ -104,54 +103,18 @@ public class MainTabActivity extends TabActivity
 
 			case R.id.radio_home :
 				tabhost.setCurrentTabByTag(HOME_TAB);
-				// Delete by Lei@2013/04/28 DEL START
-				// tabhost.setCurrentTab(checkedId);
-				// Delete by Lei@2013/04/28 DEL END
-				// Delete by Lei@2013/05/13 DEL START
-				// Toast.makeText(MainTabActivity.this, "button0",
-				// Toast.LENGTH_SHORT).show();
-				// Delete by Lei@2013/05/13 DEL END
-
 				break;
 			case R.id.radio_news :
 				tabhost.setCurrentTabByTag(NEWS_TAB);
-				// Delete by Lei@2013/04/28 DEL START
-				// tabhost.setCurrentTab(1);
-				// Delete by Lei@2013/04/28 DEL END
-				// Delete by Lei@2013/05/13 DEL START
-				// Toast.makeText(MainTabActivity.this, "button1",
-				// Toast.LENGTH_SHORT).show();
-				// Delete by Lei@2013/05/13 DEL END
 				break;
 			case R.id.radio_info :
 				tabhost.setCurrentTabByTag(INFO_TAB);
-				// Delete by Lei@2013/04/28 DEL START
-				// tabhost.setCurrentTab(2);
-				// Delete by Lei@2013/04/28 DEL END
-				// Delete by Lei@2013/05/13 DEL START
-				// Toast.makeText(MainTabActivity.this, "button2",
-				// Toast.LENGTH_SHORT).show();
-				// Delete by Lei@2013/05/13 DEL END
 				break;
 			case R.id.radio_search :
 				tabhost.setCurrentTabByTag(SEARCH_TAB);
-				// Delete by Lei@2013/04/28 DEL START
-				// tabhost.setCurrentTab(3);
-				// Delete by Lei@2013/04/28 DEL END
-				// Delete by Lei@2013/05/13 DEL START
-				// Toast.makeText(MainTabActivity.this, "button3",
-				// Toast.LENGTH_SHORT).show();
-				// Delete by Lei@2013/05/13 DEL END
 				break;
 			case R.id.radio_more :
 				tabhost.setCurrentTabByTag(MORE_TAB);
-				// Delete by Lei@2013/04/28 DEL START
-				// tabhost.setCurrentTab(4);
-				// Delete by Lei@2013/04/28 DEL END
-				// Delete by Lei@2013/05/13 DEL START
-				// Toast.makeText(MainTabActivity.this, "button4",
-				// Toast.LENGTH_SHORT).show();
-				// Delete by Lei@2013/05/13 DEL END
 				break;
 		}
 	}
