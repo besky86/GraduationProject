@@ -10,6 +10,7 @@ import com.weibo.sdk.android.api.StatusesAPI;
 import com.weibo.sdk.android.api.WeiboAPI.AUTHOR_FILTER;
 import com.weibo.sdk.android.api.WeiboAPI.SRC_FILTER;
 import com.weibo.sdk.android.api.WeiboAPI.TYPE_FILTER;
+import com.weibo.sdk.android.entity.Comment;
 import com.weibo.sdk.android.entity.Status;
 import com.weibo.sdk.android.net.RequestListener;
 
@@ -18,10 +19,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 @SuppressLint("HandlerLeak")
@@ -96,6 +102,21 @@ public class AtMeActivity extends Activity {
 		listView.addFooterView(moreView);
 		listView.setAdapter(adapter);
 
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(AtMeActivity.this,
+						DetailActivity.class);
+				intent.putExtra("status", (Status) adapter.getItem(position));
+				startActivity(intent);
+
+			}
+
+		});
 		moreView.setOnClickListener(new OnClickListener() {
 
 			@Override

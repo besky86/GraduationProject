@@ -74,6 +74,7 @@ public class CommentRequestListener implements RequestListener {
 
 		// TODO Auto-generated method stub
 		Util.showToast(activity, "评论成功");
+		activity.finish();
 	}
 	@Override
 	public void onIOException(IOException e) {

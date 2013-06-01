@@ -18,6 +18,7 @@ import com.weibo.sdk.android.api.StatusesAPI;
 import com.weibo.sdk.android.api.UsersAPI;
 import com.weibo.sdk.android.api.WeiboAPI;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -38,7 +39,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-@SuppressLint("HandlerLeak")
 public class HomeActivity extends Activity implements OnScrollListener {
 
 	private static final String TAG = "HomeActivity";
@@ -59,6 +59,7 @@ public class HomeActivity extends Activity implements OnScrollListener {
 
 	Handler h = new Handler() {
 		public void handleMessage(Message msg) {
+			long firstId = 0;
 			List<Status> statusList = Status.getStatusesList((msg.getData()
 					.getString("response")));
 
@@ -66,6 +67,8 @@ public class HomeActivity extends Activity implements OnScrollListener {
 				Util.showToast(HomeActivity.this, "无新的数据");
 				return;
 			}
+			if(adapter.getCount() > 0)
+				firstId = adapter.status.get(0).getId();
 			// Collections.sort(statusList);
 			if (adapter.getCount() == 0) {
 				adapter.status = statusList;
@@ -74,7 +77,7 @@ public class HomeActivity extends Activity implements OnScrollListener {
 
 			}
 			else {
-				long firstId = adapter.status.get(0).getId();
+
 				for (Status status : statusList) {
 					if (status == null)
 						continue;
@@ -82,6 +85,7 @@ public class HomeActivity extends Activity implements OnScrollListener {
 					if (status.getId() > firstId) {
 						Log.v("Status", status.toString());
 						adapter.status.add(0, status);
+
 					}
 					else
 						if (status.getId() < firstId) {
@@ -99,6 +103,8 @@ public class HomeActivity extends Activity implements OnScrollListener {
 				}
 			}
 			adapter.notifyDataSetChanged();
+			if (statusList.get(0).getId() > firstId)
+				startVoice();
 			Util.showToast(HomeActivity.this, "更新完成");
 			Log.v(TAG, msg.getData().getString("response"));
 
@@ -474,11 +480,13 @@ public class HomeActivity extends Activity implements OnScrollListener {
 			// TODO Auto-generated method stub
 
 			Util.showToast(HomeActivity.this, "获取数据异常");
+
 		}
 
 		@Override
 		public void onError(WeiboException e) {
 			// TODO Auto-generated method stub
+			e.getLocalizedMessage();
 			Util.showToast(HomeActivity.this, "失败");
 
 		}
@@ -506,6 +514,29 @@ public class HomeActivity extends Activity implements OnScrollListener {
 
 		}
 
+	}
+
+	private void startVoice() {
+		MediaPlayer mPlayer = MediaPlayer
+				.create(HomeActivity.this, R.raw.voice);
+		mPlayer.setLooping(false);
+
+		try {
+			mPlayer.prepare();
+		}
+		catch (IllegalStateException e) {
+
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+		catch (IOException e) {
+
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+		mPlayer.start();
 	}
 
 }

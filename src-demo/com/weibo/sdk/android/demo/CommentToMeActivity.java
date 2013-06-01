@@ -7,20 +7,27 @@ import java.util.List;
 import com.weibo.sdk.android.WeiboException;
 import com.weibo.sdk.android.adapter.CommentToMeAdapter;
 import com.weibo.sdk.android.api.CommentsAPI;
+import com.weibo.sdk.android.api.FavoritesAPI;
 import com.weibo.sdk.android.api.WeiboAPI.AUTHOR_FILTER;
 import com.weibo.sdk.android.api.WeiboAPI.SRC_FILTER;
 import com.weibo.sdk.android.entity.Comment;
 import com.weibo.sdk.android.net.RequestListener;
+import com.weibo.sdk.android.requestlisteners.FavoriteRequestListener;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 @SuppressLint("HandlerLeak")
@@ -95,6 +102,84 @@ public class CommentToMeActivity extends Activity {
 		listView.addFooterView(moreView);
 		listView.setAdapter(adapter);
 
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				// TODO Auto-generated method stub
+
+				final CharSequence[] choices = {"回复评论", "查看个人资料", "查看原微博"};
+				final AlertDialog.Builder builder = new AlertDialog.Builder(
+						CommentToMeActivity.this.getParent());
+				final int index = position;
+				builder.setTitle("评论")
+
+						// icon
+						.setItems(
+								choices,
+								new android.content.DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+
+										switch (which) {
+
+											case 0 :
+												Intent intent2comment = new Intent(
+														CommentToMeActivity.this,
+														CommentActivity.class);
+												intent2comment.putExtra(
+														"comment_id",
+														adapter.getItemId(index));
+												intent2comment
+														.putExtra(
+																"status_id",
+																((Comment) adapter
+																		.getItem(index))
+																		.getStatus()
+																		.getId());
+												CommentToMeActivity.this
+														.startActivity(intent2comment);
+												break;
+											case 1 :
+
+												Intent intent = new Intent(
+														CommentToMeActivity.this,
+														UserInfoActivity.class);
+												intent.putExtra(
+														"user_id",
+														((Comment) adapter
+																.getItem(index))
+																.getUser()
+																.getId());
+
+												startActivity(intent);
+												break;
+
+											case 2 :
+												Intent intent2detail = new Intent(
+														CommentToMeActivity.this,
+														DetailActivity.class);
+												intent2detail
+														.putExtra(
+																"status",
+																((Comment) adapter
+																		.getItem(index))
+																		.getStatus());
+
+												startActivity(intent2detail);
+
+										}
+
+									}
+								});
+				builder.create().show();
+
+			}
+
+		});
 		moreView.setOnClickListener(new OnClickListener() {
 
 			@Override

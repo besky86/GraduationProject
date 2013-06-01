@@ -80,5 +80,6 @@
     <string name="title_activity_at_me">AtMeActivity</string>
     <string name="title_activity_comment_about_me">CommentAboutMeActivity</string>
     <string name="search_hint">请输入要搜索用户的昵称</string>
+    <string name="version">版本:1.0</string>
 
 </resources>

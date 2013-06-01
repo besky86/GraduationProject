@@ -30,7 +30,9 @@ public class CommentActivity extends Activity {
 		setContentView(R.layout.activity_comment);
 		statusId = CommentActivity.this.getIntent().getLongExtra("status_id",
 				-1);
-		commentId=CommentActivity.this.getIntent().getLongExtra("comment_id", -1);
+
+		commentId = CommentActivity.this.getIntent().getLongExtra("comment_id",
+				-1);
 		getViews();
 		addListeners();
 	}
@@ -65,26 +67,30 @@ public class CommentActivity extends Activity {
 
 				// TODO Auto-generated method stub
 				String content = et_content.getText().toString();
-				if (statusId != 0) {
-					if (comment_repost.isChecked()) {
 
-						new CommentsAPI(MainTabActivity.accessToken)
-								.create(content, statusId, false,
-										new CommentRequestListener(
-												CommentActivity.this));
+				if (statusId != -1) {
+					
+					//如果要转发微博
+					if (comment_repost.isChecked()) {
 						new StatusesAPI(MainTabActivity.accessToken).repost(
 								statusId, content, COMMENTS_TYPE.CUR_STATUSES,
 								new NullRequestListener());
 
 					}
-					else {
+
+					//如果评论的是评论
+					if (commentId != -1) {
+						new CommentsAPI(MainTabActivity.accessToken)
+								.reply(commentId, statusId, content, false,
+										false, new CommentRequestListener(
+												CommentActivity.this));
+					}
+					else
 						new CommentsAPI(MainTabActivity.accessToken)
 								.create(content, statusId, false,
 										new CommentRequestListener(
 												CommentActivity.this));
 
-					}
-					CommentActivity.this.finish();
 				}
 			}
 		});

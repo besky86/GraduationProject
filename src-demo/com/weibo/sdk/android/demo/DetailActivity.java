@@ -101,7 +101,7 @@ public class DetailActivity extends Activity {
 
 			tv_source.setText("来自:" + Html.fromHtml(status.getSource()));
 
-			tv_time.setText(status.getCreated_at());
+			tv_time.setText(status.getCreated_at().replace("+0800 ", ""));
 
 			// Delete by Lei@2013/05/05 DEL END
 
@@ -247,7 +247,7 @@ public class DetailActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(DetailActivity.this,
 						MainTabActivity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
 
 			}

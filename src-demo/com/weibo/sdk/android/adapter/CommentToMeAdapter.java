@@ -154,7 +154,8 @@ public class CommentToMeAdapter extends BaseAdapter {
 		}
 		// Log.v("comment", comment.getIdstr());
 		if (!StringUtil.isEmpty(comment.getCreated_at()))
-			holder.tv_createdtime.setText(comment.getCreated_at());
+			holder.tv_createdtime.setText(comment.getCreated_at().replace(
+					"+0800 ", ""));
 
 		holder.tv_comment.setText(StringUtil.getSpannableString(comment
 				.getText()));

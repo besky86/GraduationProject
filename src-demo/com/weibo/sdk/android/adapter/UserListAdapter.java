@@ -13,6 +13,7 @@ import com.weibo.sdk.android.util.StringUtil;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -120,6 +121,7 @@ public class UserListAdapter extends BaseAdapter {
 			holder.status_text.setText(user.getStatus().getText());
 
 		if (user.isFollowing()) {
+			Log.e("following", ""+user.isFollowing());
 			holder.follow.setBackgroundResource(R.drawable.btn_unfollow_shape);
 			holder.follow.setText(R.string.unfollow);
 		}

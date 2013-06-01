@@ -44,7 +44,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-@SuppressLint("HandlerLeak")
 public class LoginActivity extends Activity {
 
 	private UserInfoService service;
@@ -128,30 +127,8 @@ public class LoginActivity extends Activity {
 		users.add(0, user);
 
 		Log.v("user", user.getUserName());
-		UserInfoListAdapter adapter = new UserInfoListAdapter(this, users);
+		final UserInfoListAdapter adapter = new UserInfoListAdapter(this, users);
 		spinner.setAdapter(adapter);
-
-		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				// TODO Auto-generated method stub
-				LoginActivity.this.user = (UserInfo) arg0
-						.getItemAtPosition(arg2);
-				Drawable icon = LoginActivity.this.user.getUserIcon();
-				BitmapDrawable tempDrawable = (BitmapDrawable) icon;
-				image.setImageBitmap(tempDrawable.getBitmap());
-
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-		});
 
 	}
 
@@ -170,6 +147,34 @@ public class LoginActivity extends Activity {
 
 	private void setListeners() {
 
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				LoginActivity.this.user = (UserInfo) arg0
+						.getItemAtPosition(arg2);
+				Log.e("userId", "" + LoginActivity.this.user.getId());
+				Log.e("userId", accessToken.getUid());
+				Drawable icon = LoginActivity.this.user.getUserIcon();
+				BitmapDrawable tempDrawable = (BitmapDrawable) icon;
+				image.setImageBitmap(tempDrawable.getBitmap());
+				accessToken.setUid(user.getUserId());
+				accessToken.setToken(user.getToken());
+				accessToken.setExpiresTime(user.getExpiresTime());
+				AccessTokenKeeper.keepAccessToken(LoginActivity.this,
+						accessToken);
+				Log.e("access", accessToken.getUid());
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
 		addAccountButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -184,38 +189,35 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (LoginActivity.accessToken.isSessionValid()
-						&& LoginActivity.accessToken != null && user != null) {
+				if (LoginActivity.accessToken.isSessionValid()) {
+					if (LoginActivity.accessToken != null && user != null) {
 
-					AccessTokenKeeper.keepAccessToken(
-							LoginActivity.this,
-							new Oauth2AccessToken(user.getUserId(), user
-									.getToken(), user.getExpiresTime()));
+						Log.e("access", accessToken.getUid());
+						Intent intent = new Intent(LoginActivity.this,
+								MainTabActivity.class);
+						accessToken = AccessTokenKeeper
+								.readAccessToken(LoginActivity.this);
+						intent.putExtra("AccessToken",
+								LoginActivity.accessToken);
+						intent.putExtra("username", user.getUserName());
+						intent.putExtra("user_id",
+								Long.parseLong(user.getUserId()));
 
-					accessToken = AccessTokenKeeper
-							.readAccessToken(LoginActivity.this);
-					Intent intent = new Intent(LoginActivity.this,
-							MainTabActivity.class);
-					// Intent intent = new Intent(LoginActivity.this,
-					// TestActivity.class);
-					// Add or Update by Lei@2013/05/05 UPD START
-					intent.putExtra("AccessToken", LoginActivity.accessToken);
-					intent.putExtra("username", user.getUserName());
-					intent.putExtra("user_id", user.getId());
+						Log.e("user", user.getUserId());
 
-					// intent.putExtra("AccessToken",
-					// LoginActivity.accessToken);
-					// Add or Update by Lei@2013/05/05 UPD END
-					LoginActivity.this.startActivity(intent);
-					// LoginActivity.this.finish( );
+						LoginActivity.this.startActivity(intent);
 
+					}
+				}
+				else {
+					Toast.makeText(LoginActivity.this, "认证过期，请重新认证",
+							Toast.LENGTH_SHORT).show();
 				}
 
 			}
 
 		});
 	}// end setListeners
-
 	class AuthDialogListener implements WeiboAuthListener {
 
 		@Override

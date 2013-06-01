@@ -153,7 +153,8 @@ public class WeiboAdapter extends BaseAdapter {
 
 		holder.txt_wb_item_time = (TextView) view
 				.findViewById(R.id.txt_wb_item_time);
-		holder.txt_wb_item_time.setText(s.getCreated_at());
+		holder.txt_wb_item_time
+				.setText(s.getCreated_at().replace("+0800 ", ""));
 
 		// Delete by Lei@2013/05/05 DEL END
 

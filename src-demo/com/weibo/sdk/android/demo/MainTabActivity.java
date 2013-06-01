@@ -44,11 +44,12 @@ public class MainTabActivity extends TabActivity
 		// accessToken = (Oauth2AccessToken) intent
 		// .getSerializableExtra("AccessToken");
 		Intent intent = MainTabActivity.this.getIntent();
-		accessToken = (Oauth2AccessToken) intent
-				.getSerializableExtra("AccessToken");
 		accessToken = AccessTokenKeeper.readAccessToken(MainTabActivity.this);
 		userName = intent.getStringExtra("username");
+		
+		Log.e("user", userName);
 		userId = intent.getLongExtra("user_id", -1);
+		Log.e("user", "" + userId);
 		// Add or Update by Lei@2013/05/05 UPD END
 		mainTab = (RadioGroup) findViewById(R.id.main_tab);
 		mainTab.setOnCheckedChangeListener(this);

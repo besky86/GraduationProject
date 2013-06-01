@@ -33,7 +33,7 @@ public class CommentListActivity extends Activity {
 	List<Comment> comments = new ArrayList<Comment>();
 	CommentListAdapter adapter;
 	// private int visibleLastIndex = 0; // 最后的可视项索引
-	//private int visibleItemCount; // 当前窗口可见项总数
+	// private int visibleItemCount; // 当前窗口可见项总数
 
 	private long id;
 	// private View titleView;
